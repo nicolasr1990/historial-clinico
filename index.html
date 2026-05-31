@@ -6,7 +6,7 @@
 <title>Historia Clínica · Los Lapachos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0b0f1a;
@@ -30,7 +30,7 @@
     --info-dim: rgba(59,130,246,0.12);
     --purple: #a78bfa;
     --purple-dim: rgba(167,139,250,0.12);
-    --glass: rgba(17,24,39,0.75);
+    --glass: rgba(17,24,39,0.85);
     --glass-border: rgba(255,255,255,0.08);
     --radius: 20px;
     --radius-lg: 24px;
@@ -38,7 +38,6 @@
     --radius-xs: 10px;
     --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
     --shadow: 0 4px 24px rgba(0,0,0,0.4);
-    --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
     --shadow-glow: 0 0 30px rgba(16,185,129,0.08);
   }
 
@@ -53,50 +52,35 @@
     margin: 0 auto;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ── CUSTOM SCROLLBAR ── */
   ::-webkit-scrollbar { width: 0; height: 0; }
 
-  /* ── ANIMATIONS ── */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
   }
   @keyframes slideUp {
     from { transform: translateY(100%); opacity: 0.5; }
     to { transform: translateY(0); opacity: 1; }
   }
-  @keyframes slideDown {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-    50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-3px); }
   }
-
-  .animate-in { animation: fadeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-  .animate-in-scale { animation: fadeInScale 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 2px 12px rgba(16,185,129,0.35); }
+    50% { box-shadow: 0 2px 20px rgba(16,185,129,0.6); }
+  }
 
   /* ── HEADER ── */
   .header {
     background: var(--glass);
-    backdrop-filter: blur(24px) saturate(1.4);
-    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-bottom: 1px solid var(--glass-border);
     padding: 14px 20px 12px;
     position: sticky;
@@ -110,8 +94,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-primary);
-    width: 38px;
-    height: 38px;
+    width: 38px; height: 38px;
     border-radius: 12px;
     font-size: 16px;
     cursor: pointer;
@@ -119,64 +102,65 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
   }
   .header-back.visible { display: flex; }
-  .header-back:active { transform: scale(0.92); background: var(--surface-light); }
-
+  .header-back:active { transform: scale(0.92); }
   .header-title { flex: 1; }
   .header-title h1 {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 19px;
     font-weight: 700;
     letter-spacing: -0.02em;
-    line-height: 1.1;
     background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .header-title p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 3px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-
+  .header-title p { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
   .header-add {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
     color: #000;
-    width: 38px;
-    height: 38px;
+    width: 38px; height: 38px;
     border-radius: 12px;
     font-size: 22px;
-    font-weight: 300;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 2px 12px rgba(16,185,129,0.35), 0 0 0 1px rgba(16,185,129,0.2);
-    transition: all 0.2s ease;
     animation: pulseGlow 3s ease-in-out infinite;
+    transition: transform 0.2s;
   }
-  .header-add:active { transform: scale(0.92); box-shadow: 0 1px 6px rgba(16,185,129,0.25); }
+  .header-add:active { transform: scale(0.92); }
 
   /* ── SCREENS ── */
-  .screen {
-    display: none;
-    padding: 16px 18px;
-    animation: fadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  }
+  .screen { display: none; padding: 16px 18px; animation: fadeIn 0.35s ease; }
   .screen.active { display: block; }
 
-  /* ── SEARCH ── */
-  .search-wrap {
-    position: relative;
-    margin-bottom: 18px;
+  /* ── LOADING ── */
+  .loading-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 16px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
   }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid var(--border-strong);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap { position: relative; margin-bottom: 18px; }
   .search-wrap input {
     width: 100%;
     padding: 14px 16px 14px 46px;
@@ -188,208 +172,90 @@
     font-weight: 500;
     color: var(--text-primary);
     outline: none;
-    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.03);
-    transition: all 0.25s ease;
+    transition: all 0.25s;
   }
-  .search-wrap input::placeholder { color: var(--text-muted); font-weight: 400; }
-  .search-wrap input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-sm);
-    background: var(--bg-elevated);
-  }
-  .search-wrap .icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: var(--text-muted);
-    pointer-events: none;
-    transition: color 0.25s;
-  }
-  .search-wrap input:focus ~ .icon { color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--text-muted); }
+  .search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .search-wrap .icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--text-muted); }
 
-  /* ── STATS BAR ── */
-  .stats-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
+  /* ── STATS ── */
+  .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; }
   .stat-chip {
     flex: 1;
-    background: linear-gradient(145deg, var(--surface) 0%, var(--bg-elevated) 100%);
+    background: linear-gradient(145deg, var(--surface), var(--bg-elevated));
     border-radius: var(--radius-sm);
     padding: 14px 10px;
     text-align: center;
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
-    transition: all 0.25s ease;
   }
   .stat-chip::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, var(--accent), var(--accent-light));
     opacity: 0.6;
   }
-  .stat-chip:active { transform: scale(0.97); }
   .stat-chip .num {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 26px;
     font-weight: 700;
     color: var(--accent-light);
     line-height: 1;
-    letter-spacing: -0.03em;
   }
-  .stat-chip .lbl {
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-top: 5px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
+  .stat-chip .lbl { font-size: 10px; color: var(--text-muted); margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
 
   /* ── SECTION LABEL ── */
   .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .section-label::before {
-    content: '';
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
+  .section-label::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 
   /* ── PATIENT CARDS ── */
   .patient-card {
-    background: linear-gradient(145deg, var(--surface) 0%, rgba(26,34,54,0.8) 100%);
+    background: linear-gradient(145deg, var(--surface), rgba(26,34,54,0.8));
     border-radius: var(--radius);
     padding: 16px;
     margin-bottom: 12px;
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     gap: 14px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-  }
-  .patient-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--accent), var(--accent-light));
+    animation: fadeIn 0.4s ease forwards;
     opacity: 0;
-    transition: opacity 0.3s;
   }
   .patient-card:active { transform: scale(0.97); }
-  .patient-card:hover::after,
-  .patient-card:active::after { opacity: 1; }
-
   .patient-avatar {
-    width: 56px;
-    height: 56px;
+    width: 56px; height: 56px;
     border-radius: var(--radius-sm);
-    object-fit: cover;
     flex-shrink: 0;
-    background: linear-gradient(135deg, var(--surface-light) 0%, var(--bg-elevated) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: linear-gradient(135deg, var(--surface-light), var(--bg-elevated));
+    display: flex; align-items: center; justify-content: center;
     font-size: 28px;
     overflow: hidden;
     border: 2px solid var(--border-strong);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    position: relative;
   }
   .patient-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .patient-avatar::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: linear-gradient(135deg, var(--accent), transparent 60%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.5;
-  }
-
   .patient-info { flex: 1; min-width: 0; }
-  .patient-name {
-    font-weight: 700;
-    font-size: 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-  }
-  .patient-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 3px;
-    font-weight: 500;
-  }
-  .patient-badges {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-  }
-  .badge {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.02em;
-    border: 1px solid transparent;
-  }
-  .badge-especie {
-    background: var(--accent-dim);
-    color: var(--accent-light);
-    border-color: rgba(16,185,129,0.15);
-  }
-  .badge-alerta {
-    background: var(--warning-dim);
-    color: var(--warning);
-    border-color: rgba(245,158,11,0.15);
-  }
+  .patient-name { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .patient-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
+  .patient-badges { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid transparent; }
+  .badge-especie { background: var(--accent-dim); color: var(--accent-light); border-color: rgba(16,185,129,0.15); }
+  .badge-alerta { background: var(--warning-dim); color: var(--warning); border-color: rgba(245,158,11,0.15); }
+  .patient-arrow { font-size: 18px; color: var(--text-muted); flex-shrink: 0; }
 
-  .patient-arrow {
-    font-size: 18px;
-    color: var(--text-muted);
-    flex-shrink: 0;
-    font-weight: 300;
-    transition: all 0.2s;
-  }
-  .patient-card:active .patient-arrow { color: var(--accent); transform: translateX(2px); }
-
-  /* ── FICHA PACIENTE ── */
+  /* ── FICHA ── */
   .ficha-hero {
-    background: linear-gradient(145deg, var(--surface) 0%, rgba(26,34,54,0.9) 100%);
+    background: linear-gradient(145deg, var(--surface), rgba(26,34,54,0.9));
     border-radius: var(--radius-lg);
     padding: 22px;
     margin-bottom: 16px;
@@ -404,529 +270,222 @@
   .ficha-hero::before {
     content: '';
     position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    top: -50%; right: -50%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
     opacity: 0.4;
     pointer-events: none;
   }
-
   .ficha-avatar {
-    width: 84px;
-    height: 84px;
+    width: 84px; height: 84px;
     border-radius: var(--radius);
-    object-fit: cover;
     flex-shrink: 0;
     background: linear-gradient(135deg, var(--surface-light), var(--bg-elevated));
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 40px;
     overflow: hidden;
     border: 2px solid var(--accent);
     box-shadow: 0 4px 16px rgba(16,185,129,0.2);
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
+    cursor: pointer;
   }
   .ficha-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
+  .ficha-avatar-hint {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.55);
+    font-size: 10px;
+    text-align: center;
+    padding: 4px 0;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
   .ficha-datos { flex: 1; position: relative; z-index: 1; }
-  .ficha-datos h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: var(--text-primary);
-  }
-  .ficha-datos .especie {
-    font-size: 12px;
-    color: var(--accent-light);
-    font-weight: 600;
-    margin-top: 4px;
-    letter-spacing: 0.02em;
-  }
-  .ficha-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 14px;
-  }
-  .ficha-item {
-    background: rgba(255,255,255,0.03);
-    border-radius: var(--radius-xs);
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-  }
-  .ficha-item label {
-    font-size: 9px;
-    color: var(--text-muted);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    display: block;
-    margin-bottom: 3px;
-  }
-  .ficha-item span {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-  }
+  .ficha-datos h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .ficha-datos .especie { font-size: 12px; color: var(--accent-light); font-weight: 600; margin-top: 4px; }
+  .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .ficha-item { background: rgba(255,255,255,0.03); border-radius: var(--radius-xs); padding: 10px 12px; border: 1px solid var(--border); }
+  .ficha-item label { font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 3px; }
+  .ficha-item span { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
 
   .dueno-card {
-    background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(16,185,129,0.05) 100%);
+    background: linear-gradient(135deg, var(--accent-dim), rgba(16,185,129,0.05));
     border: 1px solid rgba(16,185,129,0.12);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
     margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    backdrop-filter: blur(8px);
+    display: flex; align-items: center; gap: 14px;
   }
-  .dueno-card .icon {
-    font-size: 22px;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: var(--accent-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(16,185,129,0.15);
-  }
-  .dueno-card .dueno-info h4 { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-  .dueno-card .dueno-info p { font-size: 12px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+  .dueno-card .icon { font-size: 20px; width: 42px; height: 42px; border-radius: 12px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16,185,129,0.15); }
+  .dueno-card .dueno-info h4 { font-size: 14px; font-weight: 700; }
+  .dueno-card .dueno-info p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
   /* ── TABS ── */
-  .tabs-wrap {
-    overflow-x: auto;
-    scrollbar-width: none;
-    margin-bottom: 18px;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
-  }
+  .tabs-wrap { overflow-x: auto; scrollbar-width: none; margin-bottom: 18px; -webkit-overflow-scrolling: touch; }
   .tabs-wrap::-webkit-scrollbar { display: none; }
-  .tabs {
-    display: flex;
-    gap: 8px;
-    width: max-content;
-    padding: 2px;
-  }
+  .tabs { display: flex; gap: 8px; width: max-content; }
   .tab-btn {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 30px;
     padding: 9px 18px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 12px; font-weight: 600;
     color: var(--text-muted);
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: var(--shadow-sm);
-    letter-spacing: 0.01em;
+    transition: all 0.25s;
   }
   .tab-btn:active { transform: scale(0.94); }
-  .tab-btn.active {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-    color: #000;
-    border-color: transparent;
-    box-shadow: 0 2px 12px rgba(16,185,129,0.35);
-    font-weight: 700;
-  }
+  .tab-btn.active { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #000; border-color: transparent; box-shadow: 0 2px 12px rgba(16,185,129,0.35); font-weight: 700; }
 
   /* ── TIMELINE ── */
   .timeline { position: relative; padding-left: 8px; }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 19px;
-    top: 8px;
-    bottom: 80px;
-    width: 2px;
-    background: linear-gradient(180deg, var(--accent) 0%, var(--surface-light) 50%, transparent 100%);
-    opacity: 0.3;
-  }
+  .timeline::before { content: ''; position: absolute; left: 19px; top: 8px; bottom: 80px; width: 2px; background: linear-gradient(180deg, var(--accent), var(--surface-light), transparent); opacity: 0.3; }
 
   .evento-card {
-    background: linear-gradient(145deg, var(--surface) 0%, rgba(26,34,54,0.8) 100%);
+    background: linear-gradient(145deg, var(--surface), rgba(26,34,54,0.8));
     border-radius: var(--radius-sm);
     padding: 16px;
     margin-bottom: 12px;
     margin-left: 28px;
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
     position: relative;
-    animation: fadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: fadeIn 0.4s ease forwards;
     opacity: 0;
   }
-  .evento-card:nth-child(1) { animation-delay: 0.05s; }
-  .evento-card:nth-child(2) { animation-delay: 0.1s; }
-  .evento-card:nth-child(3) { animation-delay: 0.15s; }
-  .evento-card:nth-child(4) { animation-delay: 0.2s; }
-  .evento-card:nth-child(5) { animation-delay: 0.25s; }
-  .evento-card:nth-child(6) { animation-delay: 0.3s; }
+  .evento-card::before { content: ''; position: absolute; left: -22px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2.5px solid var(--accent); box-shadow: 0 0 0 3px var(--bg); z-index: 2; }
+  .evento-card.vacuna::before { border-color: var(--info); }
+  .evento-card.cirugia::before { border-color: var(--danger); }
+  .evento-card.control::before { border-color: var(--purple); }
+  .evento-card.desparasitacion::before { border-color: var(--warning); }
 
-  .evento-card::before {
-    content: '';
-    position: absolute;
-    left: -22px;
-    top: 20px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2.5px solid var(--accent);
-    box-shadow: 0 0 0 3px var(--bg), 0 0 8px var(--accent-glow);
-    z-index: 2;
-  }
-  .evento-card.vacuna::before { border-color: var(--info); box-shadow: 0 0 0 3px var(--bg), 0 0 8px rgba(59,130,246,0.3); }
-  .evento-card.cirugia::before { border-color: var(--danger); box-shadow: 0 0 0 3px var(--bg), 0 0 8px rgba(244,63,94,0.3); }
-  .evento-card.receta::before { border-color: var(--purple); box-shadow: 0 0 0 3px var(--bg), 0 0 8px rgba(167,139,250,0.3); }
-  .evento-card.desparasitacion::before { border-color: var(--warning); box-shadow: 0 0 0 3px var(--bg), 0 0 8px rgba(245,158,11,0.3); }
-
-  .evento-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  .evento-icon {
-    font-size: 16px;
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent-dim);
-  }
+  .evento-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .evento-icon { font-size: 15px; width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--accent-dim); flex-shrink: 0; }
   .evento-card.vacuna .evento-icon { background: var(--info-dim); }
   .evento-card.cirugia .evento-icon { background: var(--danger-dim); }
-  .evento-card.receta .evento-icon { background: var(--purple-dim); }
+  .evento-card.control .evento-icon { background: var(--purple-dim); }
   .evento-card.desparasitacion .evento-icon { background: var(--warning-dim); }
-
-  .evento-tipo {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-light);
-  }
+  .evento-tipo { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-light); }
   .evento-card.vacuna .evento-tipo { color: #60a5fa; }
   .evento-card.cirugia .evento-tipo { color: #fb7185; }
-  .evento-card.receta .evento-tipo { color: #c4b5fd; }
+  .evento-card.control .evento-tipo { color: #c4b5fd; }
   .evento-card.desparasitacion .evento-tipo { color: #fbbf24; }
+  .evento-fecha { margin-left: auto; font-size: 11px; color: var(--text-muted); font-weight: 600; background: rgba(255,255,255,0.04); padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); white-space: nowrap; }
+  .evento-titulo { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .evento-detalle { font-size: 12px; color: var(--text-secondary); line-height: 1.65; }
+  .evento-proxima { margin-top: 10px; font-size: 11px; background: var(--warning-dim); border-radius: var(--radius-xs); padding: 8px 12px; color: var(--warning); font-weight: 600; border: 1px solid rgba(245,158,11,0.12); }
 
-  .evento-fecha {
-    margin-left: auto;
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 600;
-    background: rgba(255,255,255,0.04);
-    padding: 3px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-  }
-  .evento-titulo {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-  }
-  .evento-detalle {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.65;
-    font-weight: 400;
-  }
-  .evento-proxima {
-    margin-top: 10px;
-    font-size: 11px;
-    background: linear-gradient(135deg, var(--warning-dim) 0%, rgba(245,158,11,0.05) 100%);
-    border-radius: var(--radius-xs);
-    padding: 8px 12px;
-    color: var(--warning);
-    font-weight: 600;
-    border: 1px solid rgba(245,158,11,0.12);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    text-align: center;
-    padding: 50px 24px;
-    color: var(--text-muted);
-  }
-  .empty-state .emoji {
-    font-size: 44px;
-    margin-bottom: 14px;
-    opacity: 0.6;
-    filter: grayscale(0.3);
-  }
-  .empty-state p {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-  }
+  /* ── EMPTY ── */
+  .empty-state { text-align: center; padding: 50px 24px; color: var(--text-muted); }
+  .empty-state .emoji { font-size: 44px; margin-bottom: 14px; opacity: 0.6; display: block; }
+  .empty-state p { font-size: 13px; font-weight: 500; }
 
   /* ── FAB ── */
   .fab-evento {
-    position: fixed;
-    bottom: 24px;
-    right: 20px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-    color: #000;
-    border: none;
-    border-radius: var(--radius);
+    position: fixed; bottom: 24px; right: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #000; border: none; border-radius: var(--radius);
     padding: 15px 22px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 24px rgba(16,185,129,0.4), 0 0 0 1px rgba(16,185,129,0.2);
-    display: none;
-    align-items: center;
-    gap: 8px;
+    box-shadow: 0 4px 24px rgba(16,185,129,0.4);
+    display: none; align-items: center; gap: 8px;
     z-index: 50;
-    transition: all 0.25s ease;
-    letter-spacing: 0.01em;
     animation: float 4s ease-in-out infinite;
   }
-  .fab-evento.visible { display: flex; animation: slideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1), float 4s ease-in-out infinite 0.3s; }
-  .fab-evento:active { transform: scale(0.93); box-shadow: 0 2px 12px rgba(16,185,129,0.3); }
+  .fab-evento.visible { display: flex; }
+  .fab-evento:active { transform: scale(0.93); }
 
   /* ── MODAL ── */
   .modal-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(0,0,0,0.65);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     z-index: 200;
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display: none; align-items: flex-end; justify-content: center;
   }
-  .modal-overlay.open {
-    display: flex;
-    opacity: 1;
-  }
+  .modal-overlay.open { display: flex; }
   .modal {
-    background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--surface) 100%);
+    background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
     border-radius: 28px 28px 0 0;
-    width: 100%;
-    max-width: 480px;
-    max-height: 92vh;
+    width: 100%; max-width: 480px; max-height: 92vh;
     overflow-y: auto;
     padding: 8px 22px 36px;
     animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     border-top: 1px solid var(--glass-border);
-    box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
   }
-  .modal-handle {
-    width: 36px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--text-muted), var(--text-secondary));
-    border-radius: 2px;
-    margin: 0 auto 20px;
-    opacity: 0.4;
-  }
-  .modal h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-  }
+  .modal-handle { width: 36px; height: 4px; background: var(--text-muted); border-radius: 2px; margin: 12px auto 20px; opacity: 0.35; }
+  .modal h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.02em; }
 
   /* ── FORM ── */
-  .form-group {
-    margin-bottom: 16px;
-  }
-  .form-group label {
-    display: block;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    margin-bottom: 7px;
-  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 7px; }
   .form-group input,
   .form-group select,
   .form-group textarea {
-    width: 100%;
-    padding: 13px 15px;
+    width: 100%; padding: 13px 15px;
     border: 1.5px solid var(--border);
     border-radius: var(--radius-xs);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    outline: none;
-    background: var(--surface);
-    transition: all 0.25s ease;
-    color: var(--text-primary);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500;
+    outline: none; background: var(--surface); color: var(--text-primary);
+    transition: all 0.25s;
   }
   .form-group input::placeholder,
   .form-group textarea::placeholder { color: var(--text-muted); font-weight: 400; }
   .form-group input:focus,
   .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 2px rgba(0,0,0,0.2);
-    background: var(--bg-elevated);
-  }
+  .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: var(--bg-elevated); }
   .form-group textarea { resize: vertical; min-height: 84px; }
-  .form-group select {
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 5l3 3 3-3' stroke='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
-  }
-  .form-group select option {
-    background: var(--surface);
-    color: var(--text-primary);
-    padding: 8px;
-  }
-
+  .form-group select { appearance: none; -webkit-appearance: none; }
+  .form-group select option { background: var(--surface); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  /* ── TIPO SELECTOR ── */
-  .tipo-selector {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 18px;
-  }
-  .tipo-btn {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-xs);
-    padding: 12px 8px;
+  /* ── FOTO INPUT ── */
+  .foto-input-wrap {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    box-shadow: var(--shadow-sm);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
   }
+  .foto-input-wrap:active { border-color: var(--accent); background: var(--accent-dim); }
+  .foto-input-wrap input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 16px; }
+  .foto-preview { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; margin: 0 auto 10px; display: none; border: 2px solid var(--accent); }
+  .foto-preview.visible { display: block; }
+  .foto-icon { font-size: 32px; margin-bottom: 8px; }
+  .foto-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .foto-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .foto-uploading { font-size: 12px; color: var(--accent-light); font-weight: 600; margin-top: 6px; display: none; }
+  .foto-uploading.visible { display: block; }
+
+  /* ── TIPO SELECTOR ── */
+  .tipo-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .tipo-btn { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-xs); padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.25s; font-family: 'Plus Jakarta Sans', sans-serif; }
   .tipo-btn:active { transform: scale(0.96); }
-  .tipo-btn .tipo-icon { font-size: 22px; display: block; margin-bottom: 5px; transition: transform 0.25s; }
-  .tipo-btn .tipo-lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); transition: color 0.25s; }
-  .tipo-btn.selected {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-sm);
-  }
-  .tipo-btn.selected .tipo-icon { transform: scale(1.15); }
+  .tipo-btn .tipo-icon { font-size: 22px; display: block; margin-bottom: 5px; }
+  .tipo-btn .tipo-lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+  .tipo-btn.selected { background: var(--accent-dim); border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
   .tipo-btn.selected .tipo-lbl { color: var(--accent-light); font-weight: 700; }
 
   /* ── BUTTONS ── */
-  .btn-primary {
-    width: 100%;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-    color: #000;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 16px rgba(16,185,129,0.3);
-    letter-spacing: 0.01em;
-  }
-  .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(16,185,129,0.2); }
-  .btn-secondary {
-    width: 100%;
-    background: var(--surface);
-    color: var(--text-secondary);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.2s ease;
-  }
-  .btn-secondary:active { transform: scale(0.97); background: var(--surface-light); }
+  .btn-primary { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #000; border: none; border-radius: var(--radius-sm); padding: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: all 0.25s; box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-secondary { width: 100%; background: var(--surface); color: var(--text-secondary); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.2s; }
+  .btn-secondary:active { transform: scale(0.97); }
 
   /* ── TOAST ── */
-  .toast {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-    color: #000;
-    padding: 12px 26px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
-    z-index: 300;
-    opacity: 0;
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    white-space: nowrap;
-    pointer-events: none;
-    box-shadow: 0 4px 20px rgba(16,185,129,0.35);
-    letter-spacing: 0.01em;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #000; padding: 12px 26px; border-radius: 30px; font-size: 13px; font-weight: 700; z-index: 300; opacity: 0; transition: all 0.35s ease; white-space: nowrap; pointer-events: none; box-shadow: 0 4px 20px rgba(16,185,129,0.35); }
+  .toast.show { opacity: 1; }
+  .toast.error { background: linear-gradient(135deg, var(--danger), #fb7185); box-shadow: 0 4px 20px rgba(244,63,94,0.35); }
 
-  /* ── NO RESULTS ── */
-  #no-results {
-    display: none;
-    text-align: center;
-    padding: 40px 0;
-    color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  /* ── PRÓXIMA VACUNA TAG ── */
-  .proxima-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: var(--warning-dim);
-    color: var(--warning);
-    margin-left: 6px;
-    vertical-align: middle;
-    border: 1px solid rgba(245,158,11,0.12);
-  }
-
-  /* ── RESPONSIVE TOUCH OPTIMIZATIONS ── */
-  @media (hover: hover) {
-    .patient-card:hover {
-      border-color: var(--border-strong);
-      box-shadow: var(--shadow);
-      transform: translateY(-1px);
-    }
-    .stat-chip:hover { border-color: var(--border-strong); }
-    .tab-btn:not(.active):hover { border-color: var(--border-strong); color: var(--text-secondary); }
-    .tipo-btn:not(.selected):hover { border-color: var(--border-strong); }
-    .btn-secondary:hover { border-color: var(--border-strong); color: var(--text-primary); }
-    .header-back:hover { border-color: var(--border-strong); }
-  }
+  #no-results { display: none; text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 14px; font-weight: 500; }
 </style>
 </head>
 <body>
@@ -938,150 +497,126 @@
     <h1 id="headerTitle">Los Lapachos</h1>
     <p id="headerSub">Historia Clínica</p>
   </div>
-  <button class="header-add" id="btnAdd" onclick="abrirModalPaciente()" title="Nuevo paciente">+</button>
+  <button class="header-add" id="btnAdd" onclick="abrirModalPaciente()">+</button>
 </div>
 
-<!-- SCREEN: LISTA -->
+<!-- SCREEN LISTA -->
 <div class="screen active" id="screen-lista">
   <div style="height:6px"></div>
   <div class="stats-bar">
-    <div class="stat-chip">
-      <div class="num" id="statTotal">8</div>
-      <div class="lbl">Pacientes</div>
-    </div>
-    <div class="stat-chip">
-      <div class="num" id="statConsultas">12</div>
-      <div class="lbl">Consultas</div>
-    </div>
-    <div class="stat-chip">
-      <div class="num" id="statProximas">3</div>
-      <div class="lbl">Pr&oacute;x. vacunas</div>
-    </div>
+    <div class="stat-chip"><div class="num" id="statTotal">–</div><div class="lbl">Pacientes</div></div>
+    <div class="stat-chip"><div class="num" id="statConsultas">–</div><div class="lbl">Consultas</div></div>
+    <div class="stat-chip"><div class="num" id="statProximas">–</div><div class="lbl">Próx. vacunas</div></div>
   </div>
-
   <div class="search-wrap">
-    <span class="icon">&#128269;</span>
-    <input type="text" id="buscador" placeholder="Buscar paciente o due&ntilde;o..." oninput="filtrarPacientes(this.value)">
+    <span class="icon">🔍</span>
+    <input type="text" id="buscador" placeholder="Buscar paciente o dueño..." oninput="filtrarPacientes(this.value)">
   </div>
-
   <div class="section-label">Pacientes registrados</div>
   <div id="lista-pacientes"></div>
-  <div id="no-results">No se encontraron resultados &#128062;</div>
+  <div id="no-results">No se encontraron resultados 🐾</div>
 </div>
 
-<!-- SCREEN: FICHA -->
+<!-- SCREEN FICHA -->
 <div class="screen" id="screen-ficha">
   <div id="ficha-contenido"></div>
 </div>
 
 <!-- FAB -->
-<button class="fab-evento" id="fabEvento" onclick="abrirModalEvento()">
-  + Agregar registro
-</button>
+<button class="fab-evento" id="fabEvento" onclick="abrirModalEvento()">+ Agregar registro</button>
 
-<!-- MODAL NUEVO EVENTO -->
+<!-- MODAL EVENTO -->
 <div class="modal-overlay" id="modalEvento">
   <div class="modal">
     <div class="modal-handle"></div>
-    <h3>&#128203; Nuevo registro</h3>
-
-    <div class="tipo-selector" id="tipoSelector">
-      <button class="tipo-btn selected" onclick="selTipo(this,'consulta')">
-        <span class="tipo-icon">&#129658;</span>
-        <span class="tipo-lbl">Consulta</span>
-      </button>
-      <button class="tipo-btn" onclick="selTipo(this,'vacuna')">
-        <span class="tipo-icon">&#128137;</span>
-        <span class="tipo-lbl">Vacuna</span>
-      </button>
-      <button class="tipo-btn" onclick="selTipo(this,'cirugia')">
-        <span class="tipo-icon">&#128300;</span>
-        <span class="tipo-lbl">Cirug&iacute;a</span>
-      </button>
-      <button class="tipo-btn" onclick="selTipo(this,'receta')">
-        <span class="tipo-icon">&#128138;</span>
-        <span class="tipo-lbl">Receta</span>
-      </button>
-      <button class="tipo-btn" onclick="selTipo(this,'desparasitacion')">
-        <span class="tipo-icon">&#128027;</span>
-        <span class="tipo-lbl">Desparasitaci&oacute;n</span>
-      </button>
+    <h3>📋 Nuevo registro</h3>
+    <div class="tipo-selector">
+      <button class="tipo-btn selected" onclick="selTipo(this,'consulta')"><span class="tipo-icon">🩺</span><span class="tipo-lbl">Consulta</span></button>
+      <button class="tipo-btn" onclick="selTipo(this,'vacuna')"><span class="tipo-icon">💉</span><span class="tipo-lbl">Vacuna</span></button>
+      <button class="tipo-btn" onclick="selTipo(this,'cirugia')"><span class="tipo-icon">🔬</span><span class="tipo-lbl">Cirugía</span></button>
+      <button class="tipo-btn" onclick="selTipo(this,'control')"><span class="tipo-icon">⚖️</span><span class="tipo-lbl">Control</span></button>
+      <button class="tipo-btn" onclick="selTipo(this,'desparasitacion')"><span class="tipo-icon">🐛</span><span class="tipo-lbl">Desparasitación</span></button>
     </div>
 
     <div id="form-consulta" class="form-evento">
-      <div class="form-group"><label>Motivo de consulta</label><input type="text" id="ev-motivo" placeholder="Ej: V&oacute;mitos, p&eacute;rdida de apetito..."></div>
-      <div class="form-group"><label>Diagn&oacute;stico</label><input type="text" id="ev-diagnostico" placeholder="Ej: Gastritis aguda"></div>
-      <div class="form-group"><label>Tratamiento indicado</label><textarea id="ev-tratamiento" placeholder="Describ&iacute; el tratamiento..."></textarea></div>
+      <div class="form-group"><label>Motivo de consulta</label><input type="text" id="ev-motivo" placeholder="Ej: Vómitos, pérdida de apetito..."></div>
+      <div class="form-group"><label>Diagnóstico</label><input type="text" id="ev-diagnostico" placeholder="Ej: Gastritis aguda"></div>
+      <div class="form-group"><label>Tratamiento</label><textarea id="ev-tratamiento" placeholder="Describí el tratamiento..."></textarea></div>
       <div class="form-group"><label>Observaciones</label><textarea id="ev-obs-consulta" placeholder="Notas adicionales..." style="min-height:60px"></textarea></div>
     </div>
-
     <div id="form-vacuna" class="form-evento" style="display:none">
-      <div class="form-group"><label>Vacuna aplicada</label><input type="text" id="ev-vacuna" placeholder="Ej: Antirr&aacute;bica, S&eacute;xtuple..."></div>
+      <div class="form-group"><label>Vacuna aplicada</label><input type="text" id="ev-vacuna" placeholder="Ej: Antirrábica, Séxtuple..."></div>
       <div class="form-row">
         <div class="form-group"><label>Dosis</label><input type="text" id="ev-dosis-vac" placeholder="Ej: 1ml"></div>
         <div class="form-group"><label>Lote</label><input type="text" id="ev-lote" placeholder="Ej: A4521"></div>
       </div>
-      <div class="form-group"><label>Pr&oacute;ximo refuerzo</label><input type="date" id="ev-prox-vac"></div>
+      <div class="form-group"><label>Próximo refuerzo</label><input type="date" id="ev-prox-vac"></div>
     </div>
-
     <div id="form-cirugia" class="form-evento" style="display:none">
-      <div class="form-group"><label>Procedimiento</label><input type="text" id="ev-cirugia" placeholder="Ej: Castraci&oacute;n, limpieza dental..."></div>
-      <div class="form-group"><label>Anestesia utilizada</label><input type="text" id="ev-anestesia" placeholder="Ej: Ketamina + Xilazina"></div>
-      <div class="form-group"><label>Observaciones post-operatorio</label><textarea id="ev-obs-cir" placeholder="Evoluci&oacute;n, indicaciones de alta..."></textarea></div>
+      <div class="form-group"><label>Procedimiento</label><input type="text" id="ev-cirugia" placeholder="Ej: Castración, limpieza dental..."></div>
+      <div class="form-group"><label>Anestesia</label><input type="text" id="ev-anestesia" placeholder="Ej: Ketamina + Xilazina"></div>
+      <div class="form-group"><label>Observaciones post-operatorio</label><textarea id="ev-obs-cir" placeholder="Evolución, indicaciones de alta..."></textarea></div>
     </div>
-
-    <div id="form-receta" class="form-evento" style="display:none">
-      <div class="form-group"><label>Medicamento</label><input type="text" id="ev-medicamento" placeholder="Ej: Amoxicilina 500mg"></div>
+    <div id="form-control" class="form-evento" style="display:none">
       <div class="form-row">
-        <div class="form-group"><label>Dosis</label><input type="text" id="ev-dosis-rec" placeholder="Ej: 1 comp."></div>
-        <div class="form-group"><label>Duraci&oacute;n</label><input type="text" id="ev-duracion" placeholder="Ej: 7 d&iacute;as"></div>
+        <div class="form-group"><label>Peso (kg)</label><input type="number" id="ev-peso" placeholder="Ej: 12.5" step="0.1"></div>
+        <div class="form-group"><label>Temperatura (°C)</label><input type="number" id="ev-temperatura" placeholder="Ej: 38.5" step="0.1"></div>
       </div>
-      <div class="form-group"><label>Indicaciones</label><textarea id="ev-indicaciones" placeholder="Cada cu&aacute;nto, con o sin comida..."></textarea></div>
+      <div class="form-group"><label>Condición corporal</label>
+        <select id="ev-condicion"><option>Muy delgado</option><option>Delgado</option><option selected>Ideal</option><option>Sobrepeso</option><option>Obeso</option></select>
+      </div>
+      <div class="form-group"><label>Observaciones</label><textarea id="ev-obs-control" placeholder="Estado general, comportamiento..."></textarea></div>
     </div>
-
     <div id="form-desparasitacion" class="form-evento" style="display:none">
       <div class="form-group"><label>Producto</label><input type="text" id="ev-producto" placeholder="Ej: Frontline Plus, Milbemax..."></div>
       <div class="form-row">
         <div class="form-group"><label>Dosis</label><input type="text" id="ev-dosis-des" placeholder="Ej: 1 pipeta"></div>
-        <div class="form-group"><label>V&iacute;a</label>
-          <select id="ev-via"><option>Oral</option><option>T&oacute;pica</option><option>Inyectable</option></select>
-        </div>
+        <div class="form-group"><label>Vía</label><select id="ev-via"><option>Oral</option><option>Tópica</option><option>Inyectable</option></select></div>
       </div>
-      <div class="form-group"><label>Pr&oacute;xima aplicaci&oacute;n</label><input type="date" id="ev-prox-des"></div>
+      <div class="form-group"><label>Próxima aplicación</label><input type="date" id="ev-prox-des"></div>
     </div>
 
     <div class="form-group"><label>Fecha del registro</label><input type="date" id="ev-fecha"></div>
-
-    <button class="btn-primary" onclick="guardarEvento()">Guardar registro</button>
+    <button class="btn-primary" id="btnGuardarEvento" onclick="guardarEvento()">Guardar registro</button>
     <button class="btn-secondary" onclick="cerrarModal('modalEvento')">Cancelar</button>
   </div>
 </div>
 
-<!-- MODAL NUEVO PACIENTE -->
+<!-- MODAL PACIENTE -->
 <div class="modal-overlay" id="modalPaciente">
   <div class="modal">
     <div class="modal-handle"></div>
-    <h3>&#128062; Nuevo paciente</h3>
+    <h3>🐾 Nuevo paciente</h3>
+
+    <!-- FOTO -->
+    <div class="foto-input-wrap" id="fotoWrap" onclick="document.getElementById('inputFoto').click()">
+      <img class="foto-preview" id="fotoPreview" src="" alt="preview">
+      <div id="fotoPlaceholder">
+        <div class="foto-icon">📷</div>
+        <div class="foto-label">Foto de la mascota</div>
+        <div class="foto-sub">Cámara o galería</div>
+      </div>
+      <div class="foto-uploading" id="fotoUploading">⏳ Subiendo foto...</div>
+    </div>
+    <input type="file" id="inputFoto" accept="image/*" capture="environment" style="display:none" onchange="handleFotoChange(this)">
 
     <div class="form-row">
       <div class="form-group"><label>Nombre</label><input type="text" id="np-nombre" placeholder="Ej: Milo"></div>
       <div class="form-group"><label>Especie</label>
         <select id="np-especie">
-          <option value="&#128054; Perro">&#128054; Perro</option>
-          <option value="&#128049; Gato">&#128049; Gato</option>
-          <option value="&#128007; Conejo">&#128007; Conejo</option>
-          <option value="&#128038; Ave">&#128038; Ave</option>
-          <option value="&#128057; Roedor">&#128057; Roedor</option>
-          <option value="&#128013; Reptil">&#128013; Reptil</option>
+          <option value="🐶 Perro">🐶 Perro</option>
+          <option value="🐱 Gato">🐱 Gato</option>
+          <option value="🐰 Conejo">🐰 Conejo</option>
+          <option value="🐦 Ave">🐦 Ave</option>
+          <option value="🐹 Roedor">🐹 Roedor</option>
+          <option value="🐍 Reptil">🐍 Reptil</option>
           <option value="Otro">Otro</option>
         </select>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Raza</label><input type="text" id="np-raza" placeholder="Ej: Labrador"></div>
-      <div class="form-group"><label>Sexo</label>
-        <select id="np-sexo"><option>Macho</option><option>Hembra</option></select>
-      </div>
+      <div class="form-group"><label>Sexo</label><select id="np-sexo"><option>Macho</option><option>Hembra</option></select></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Fecha de nacimiento</label><input type="date" id="np-nacimiento"></div>
@@ -1089,222 +624,201 @@
     </div>
 
     <div style="border-top:1.5px solid var(--border);margin:16px 0 14px;padding-top:16px">
-      <div class="form-group" style="margin-bottom:6px"><label>&#128100; Datos del due&ntilde;o</label></div>
-      <div class="form-group"><input type="text" id="np-dueno" placeholder="Nombre del due&ntilde;o/a"></div>
+      <div class="form-group" style="margin-bottom:6px"><label>👤 Datos del dueño</label></div>
+      <div class="form-group"><input type="text" id="np-dueno" placeholder="Nombre del dueño/a"></div>
       <div class="form-row">
-        <div class="form-group"><input type="tel" id="np-tel" placeholder="Tel&eacute;fono"></div>
-        <div class="form-group"><input type="text" id="np-dir" placeholder="Direcci&oacute;n"></div>
+        <div class="form-group"><input type="tel" id="np-tel" placeholder="Teléfono"></div>
+        <div class="form-group"><input type="text" id="np-dir" placeholder="Dirección"></div>
       </div>
     </div>
 
-    <button class="btn-primary" onclick="guardarPaciente()">Guardar paciente</button>
+    <button class="btn-primary" id="btnGuardarPaciente" onclick="guardarPaciente()">Guardar paciente</button>
     <button class="btn-secondary" onclick="cerrarModal('modalPaciente')">Cancelar</button>
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── DATOS FICTICIOS ───────────────────────────────────────────────────
-const pacientes = [
-  {
-    id: 1,
-    nombre: "Milo",
-    especie: "🐶 Perro",
-    raza: "Labrador Retriever",
-    sexo: "Macho",
-    nacimiento: "2020-03-15",
-    color: "Amarillo",
-    foto: "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=200&q=80",
-    dueno: "Laura G\u00f3mez",
-    tel: "3624-551234",
-    dir: "Av. San Mart\u00edn 420"
-  },
-  {
-    id: 2,
-    nombre: "Luna",
-    especie: "🐱 Gato",
-    raza: "Siam\u00e9s",
-    sexo: "Hembra",
-    nacimiento: "2021-07-08",
-    color: "Crema y marr\u00f3n",
-    foto: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=200&q=80",
-    dueno: "Marcos P\u00e9rez",
-    tel: "3624-789012",
-    dir: "Belgrano 88"
-  },
-  {
-    id: 3,
-    nombre: "Rocky",
-    especie: "🐶 Perro",
-    raza: "Bulldog Franc\u00e9s",
-    sexo: "Macho",
-    nacimiento: "2019-11-22",
-    color: "Atigrado",
-    foto: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=200&q=80",
-    dueno: "Ana Rodr\u00edguez",
-    tel: "3624-445566",
-    dir: "25 de Mayo 315"
-  },
-  {
-    id: 4,
-    nombre: "Canela",
-    especie: "🐱 Gato",
-    raza: "Mestizo",
-    sexo: "Hembra",
-    nacimiento: "2022-02-14",
-    color: "Naranja",
-    foto: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&q=80",
-    dueno: "Carlos Ib\u00e1\u00f1ez",
-    tel: "3624-112233",
-    dir: "Sarmiento 72"
-  },
-  {
-    id: 5,
-    nombre: "Thor",
-    especie: "🐶 Perro",
-    raza: "Pastor Alem\u00e1n",
-    sexo: "Macho",
-    nacimiento: "2018-05-30",
-    color: "Negro y fuego",
-    foto: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=200&q=80",
-    dueno: "Silvina Torres",
-    tel: "3624-667788",
-    dir: "Rivadavia 200"
-  },
-  {
-    id: 6,
-    nombre: "Pipa",
-    especie: "🐰 Conejo",
-    raza: "Holland Lop",
-    sexo: "Hembra",
-    nacimiento: "2023-01-10",
-    color: "Blanco y gris",
-    foto: null,
-    dueno: "Julia Mart\u00ednez",
-    tel: "3624-998877",
-    dir: "Italia 55"
-  },
-  {
-    id: 7,
-    nombre: "Coco",
-    especie: "🐦 Ave",
-    raza: "Cotorra argentina",
-    sexo: "Macho",
-    nacimiento: "2021-09-01",
-    color: "Verde",
-    foto: null,
-    dueno: "Ram\u00f3n D\u00edaz",
-    tel: "3624-334455",
-    dir: "Urquiza 180"
-  },
-  {
-    id: 8,
-    nombre: "Negra",
-    especie: "🐶 Perro",
-    raza: "Mestizo",
-    sexo: "Hembra",
-    nacimiento: "2017-12-03",
-    color: "Negro",
-    foto: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=200&q=80",
-    dueno: "Horacio Ben\u00edtez",
-    tel: "3624-556677",
-    dir: "Corrientes 90"
-  }
-];
+// ── CONFIG ────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2faYo06W2m6leLzs36tDdOrHAI9-0MV521m252Y-eqbGDykqtOyt6OmOCc2yDnqPc/exec";
+const CLOUD_NAME      = "dvxr0garp";
+const UPLOAD_PRESET   = "veterinaria_lapachos";
 
-const eventos = [
-  { id:1, pacienteId:1, tipo:"consulta", fecha:"2024-11-10", motivo:"V\u00f3mitos repetidos", diagnostico:"Gastritis aguda", tratamiento:"Ranitidina 10mg/kg c/12hs por 5 d\u00edas, dieta blanda", obs:"" },
-  { id:2, pacienteId:1, tipo:"vacuna", fecha:"2024-10-01", vacuna:"S\u00e9xtuple", dosis:"1ml", lote:"B2210", proxRefuerzo:"2025-10-01" },
-  { id:3, pacienteId:1, tipo:"desparasitacion", fecha:"2024-09-15", producto:"Milbemax", dosis:"1 comprimido", via:"Oral", proxAplicacion:"2025-03-15" },
-  { id:4, pacienteId:1, tipo:"receta", fecha:"2024-11-10", medicamento:"Ranitidina 75mg", dosis:"1/2 comprimido", duracion:"5 d\u00edas", indicaciones:"Cada 12 horas, antes de las comidas. Dieta blanda hasta nueva consulta." },
-  { id:5, pacienteId:2, tipo:"consulta", fecha:"2024-11-05", motivo:"Control anual", diagnostico:"Animal sano", tratamiento:"Sin tratamiento", obs:"Peso: 3.8kg. Pelaje en buen estado." },
-  { id:6, pacienteId:2, tipo:"vacuna", fecha:"2024-11-05", vacuna:"Triple felina", dosis:"1ml", lote:"C0041", proxRefuerzo:"2025-11-05" },
-  { id:7, pacienteId:2, tipo:"vacuna", fecha:"2024-11-05", vacuna:"Antirr\u00e1bica", dosis:"1ml", lote:"R1123", proxRefuerzo:"2025-11-05" },
-  { id:8, pacienteId:3, tipo:"cirugia", fecha:"2024-08-20", procedimiento:"Castraci\u00f3n", anestesia:"Ketamina + Xilazina + Atropina", obs:"Procedimiento sin complicaciones. Alta a las 4hs. Control a los 7 d\u00edas." },
-  { id:9, pacienteId:3, tipo:"consulta", fecha:"2024-08-27", motivo:"Control post-operatorio", diagnostico:"Cicatrizaci\u00f3n correcta", tratamiento:"Retirada de puntos", obs:"Excelente recuperaci\u00f3n." },
-  { id:10, pacienteId:5, tipo:"consulta", fecha:"2024-10-18", motivo:"Cojera miembro posterior derecho", diagnostico:"Distensi\u00f3n ligamentosa", tratamiento:"Reposo absoluto 15 d\u00edas, Meloxicam 0.1mg/kg c/24hs", obs:"Rx sin fracturas." },
-  { id:11, pacienteId:5, tipo:"desparasitacion", fecha:"2024-09-01", producto:"Frontline Plus", dosis:"1 pipeta grande", via:"T\u00f3pica", proxAplicacion:"2024-12-01" },
-  { id:12, pacienteId:8, tipo:"consulta", fecha:"2024-11-12", motivo:"Otitis bilateral", diagnostico:"Otitis externa bacteriana", tratamiento:"Limpieza con Epiotic, Otomax gotas c/12hs por 10 d\u00edas", obs:"Alergia ambiental posible." },
-];
+// ── ESTADO ────────────────────────────────────────────────────────────
+let pacientesData   = [];
+let eventosCache    = {};   // { pacienteId: [...eventos] }
+let pacienteActual  = null;
+let tipoEvento      = "consulta";
+let fotoURLPendiente = "";  // URL de Cloudinary lista para guardar
 
-let pacientesData = [...pacientes];
-let eventosData = [...eventos];
-let pacienteActual = null;
-let tipoEventoSeleccionado = "consulta";
-
-// ── RENDER LISTA ────────────────────────────────────────────────────
-function calcularEdad(nacimiento) {
-  if (!nacimiento) return "\u2013";
-  const hoy = new Date();
-  const nac = new Date(nacimiento);
-  const a\u00f1os = hoy.getFullYear() - nac.getFullYear();
-  const meses = hoy.getMonth() - nac.getMonth();
-  if (a\u00f1os === 0) return `${hoy.getMonth() - nac.getMonth() + (meses < 0 ? 12 : 0)} meses`;
-  return `${a\u00f1os} a\u00f1o${a\u00f1os !== 1 ? "s" : ""}`;
+// ── API HELPERS ───────────────────────────────────────────────────────
+async function apiGet(params) {
+  const qs = new URLSearchParams(params).toString();
+  const res = await fetch(`${APPS_SCRIPT_URL}?${qs}`);
+  return res.json();
 }
 
-function emojiEspecie(especie) {
-  const m = especie.match(/^\S+/);
-  return m ? m[0] : "🐾";
+async function apiPost(body) {
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+// ── CLOUDINARY UPLOAD ─────────────────────────────────────────────────
+async function subirFotoCloudinary(file) {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("upload_preset", UPLOAD_PRESET);
+  fd.append("folder", "veterinaria/pacientes");
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+    method: "POST",
+    body: fd
+  });
+  const data = await res.json();
+  if (data.secure_url) return data.secure_url;
+  throw new Error("Error subiendo foto");
+}
+
+// ── MANEJO DE FOTO ────────────────────────────────────────────────────
+async function handleFotoChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Preview inmediato
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('fotoPreview');
+    prev.src = e.target.result;
+    prev.classList.add('visible');
+    document.getElementById('fotoPlaceholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+
+  // Subir a Cloudinary en background
+  document.getElementById('fotoUploading').classList.add('visible');
+  document.getElementById('btnGuardarPaciente').disabled = true;
+  try {
+    fotoURLPendiente = await subirFotoCloudinary(file);
+    document.getElementById('fotoUploading').textContent = '✅ Foto lista';
+  } catch (err) {
+    mostrarToast('❌ Error subiendo foto', true);
+    fotoURLPendiente = "";
+  } finally {
+    document.getElementById('fotoUploading').classList.remove('visible');
+    document.getElementById('btnGuardarPaciente').disabled = false;
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+async function init() {
+  document.getElementById('lista-pacientes').innerHTML = `
+    <div class="loading-wrap"><div class="spinner"></div><span>Cargando pacientes...</span></div>`;
+  try {
+    pacientesData = await apiGet({ action: "getPacientes" });
+    renderLista(pacientesData);
+    actualizarStats();
+  } catch (err) {
+    document.getElementById('lista-pacientes').innerHTML =
+      `<div class="empty-state"><span class="emoji">⚠️</span><p>Error al cargar datos. Verificá la conexión.</p></div>`;
+  }
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────
+function actualizarStats() {
+  document.getElementById('statTotal').textContent = pacientesData.length;
+  // Consultas y vacunas próximas se calculan del cache de eventos
+  let totalConsultas = 0, proxVacunas = 0;
+  const limite = new Date(Date.now() + 30 * 24 * 3600 * 1000);
+  Object.values(eventosCache).forEach(evs => {
+    evs.forEach(ev => {
+      if (ev.Tipo === 'consulta') totalConsultas++;
+      if (ev.Tipo === 'vacuna' && ev.ProxRefuerzo && new Date(ev.ProxRefuerzo) <= limite) proxVacunas++;
+    });
+  });
+  document.getElementById('statConsultas').textContent = totalConsultas;
+  document.getElementById('statProximas').textContent = proxVacunas;
+}
+
+// ── RENDER LISTA ──────────────────────────────────────────────────────
+function calcularEdad(nac) {
+  if (!nac) return '–';
+  const hoy = new Date(), n = new Date(nac);
+  const años = hoy.getFullYear() - n.getFullYear();
+  if (años === 0) return `${hoy.getMonth() - n.getMonth() + (hoy.getMonth() < n.getMonth() ? 12 : 0)} meses`;
+  return `${años} año${años !== 1 ? 's' : ''}`;
+}
+
+function emojiEspecie(esp) {
+  return (esp.match(/^\S+/) || ['🐾'])[0];
 }
 
 function renderLista(lista) {
   const cont = document.getElementById('lista-pacientes');
   const noRes = document.getElementById('no-results');
-  if (lista.length === 0) {
-    cont.innerHTML = '';
-    noRes.style.display = 'block';
-    return;
-  }
+  if (!lista.length) { cont.innerHTML = ''; noRes.style.display = 'block'; return; }
   noRes.style.display = 'none';
+
+  const limite = new Date(Date.now() + 30 * 24 * 3600 * 1000);
   cont.innerHTML = lista.map((p, i) => {
-    const evsPac = eventosData.filter(e => e.pacienteId === p.id);
-    const proxVac = evsPac.find(e => e.tipo === 'vacuna' && e.proxRefuerzo && new Date(e.proxRefuerzo) <= new Date(Date.now() + 30*24*3600*1000));
-    const avatar = p.foto
-      ? `<div class="patient-avatar"><img src="${p.foto}" alt="${p.nombre}" loading="lazy"></div>`
-      : `<div class="patient-avatar">${emojiEspecie(p.especie)}</div>`;
+    const evs = eventosCache[p.ID] || [];
+    const proxVac = evs.find(e => e.Tipo === 'vacuna' && e.ProxRefuerzo && new Date(e.ProxRefuerzo) <= limite);
+    const avatar = p.FotoURL
+      ? `<div class="patient-avatar"><img src="${p.FotoURL}" loading="lazy"></div>`
+      : `<div class="patient-avatar">${emojiEspecie(p.Especie)}</div>`;
     return `
-    <div class="patient-card" onclick="abrirFicha(${p.id})" style="animation-delay: ${i * 0.04}s">
+    <div class="patient-card" onclick="abrirFicha('${p.ID}')" style="animation-delay:${i * 0.04}s">
       ${avatar}
       <div class="patient-info">
-        <div class="patient-name">${p.nombre}</div>
-        <div class="patient-sub">👤 ${p.dueno} \u00b7 ${calcularEdad(p.nacimiento)}</div>
+        <div class="patient-name">${p.Nombre}</div>
+        <div class="patient-sub">👤 ${p.Dueno} · ${calcularEdad(p.Nacimiento)}</div>
         <div class="patient-badges">
-          <span class="badge badge-especie">${p.especie}</span>
-          ${proxVac ? `<span class="badge badge-alerta">\u23f0 Refuerzo pronto</span>` : ''}
+          <span class="badge badge-especie">${p.Especie}</span>
+          ${proxVac ? `<span class="badge badge-alerta">⏰ Refuerzo pronto</span>` : ''}
         </div>
       </div>
-      <div class="patient-arrow">\u203a</div>
+      <div class="patient-arrow">›</div>
     </div>`;
   }).join('');
-  // Add animation class to cards
-  cont.querySelectorAll('.patient-card').forEach(c => c.classList.add('animate-in'));
 }
 
 function filtrarPacientes(q) {
-  const txt = q.toLowerCase().trim();
-  if (!txt) { renderLista(pacientesData); return; }
-  renderLista(pacientesData.filter(p =>
-    p.nombre.toLowerCase().includes(txt) ||
-    p.dueno.toLowerCase().includes(txt) ||
-    p.raza.toLowerCase().includes(txt)
-  ));
+  const t = q.toLowerCase().trim();
+  renderLista(t ? pacientesData.filter(p =>
+    p.Nombre?.toLowerCase().includes(t) ||
+    p.Dueno?.toLowerCase().includes(t) ||
+    p.Raza?.toLowerCase().includes(t)
+  ) : pacientesData);
 }
 
-// ── FICHA PACIENTE ─────────────────────────────────────────────
-function abrirFicha(id) {
-  pacienteActual = pacientesData.find(p => p.id === id);
-  renderFicha();
+// ── FICHA ─────────────────────────────────────────────────────────────
+async function abrirFicha(id) {
+  pacienteActual = pacientesData.find(p => p.ID === id);
   document.getElementById('screen-lista').classList.remove('active');
   document.getElementById('screen-ficha').classList.add('active');
   document.getElementById('btnBack').classList.add('visible');
   document.getElementById('btnAdd').style.display = 'none';
   document.getElementById('fabEvento').classList.add('visible');
-  document.getElementById('headerTitle').textContent = pacienteActual.nombre;
-  document.getElementById('headerSub').textContent = pacienteActual.especie + ' \u00b7 ' + pacienteActual.raza;
-  window.scrollTo(0,0);
+  document.getElementById('headerTitle').textContent = pacienteActual.Nombre;
+  document.getElementById('headerSub').textContent = `${pacienteActual.Especie} · ${pacienteActual.Raza}`;
+  window.scrollTo(0, 0);
+
+  renderFichaShell();
+
+  // cargar eventos si no están en cache
+  if (!eventosCache[id]) {
+    document.getElementById('timeline-eventos').innerHTML =
+      `<div class="loading-wrap"><div class="spinner"></div><span>Cargando historial...</span></div>`;
+    try {
+      eventosCache[id] = await apiGet({ action: "getEventos", id });
+      actualizarStats();
+    } catch {
+      eventosCache[id] = [];
+    }
+  }
+  renderTimeline('todos');
 }
 
 function volverLista() {
@@ -1314,28 +828,29 @@ function volverLista() {
   document.getElementById('btnAdd').style.display = '';
   document.getElementById('fabEvento').classList.remove('visible');
   document.getElementById('headerTitle').textContent = 'Los Lapachos';
-  document.getElementById('headerSub').textContent = 'Historia Cl\u00ednica';
+  document.getElementById('headerSub').textContent = 'Historia Clínica';
   pacienteActual = null;
 }
 
-function renderFicha() {
+function renderFichaShell() {
   const p = pacienteActual;
-  const avatar = p.foto
-    ? `<div class="ficha-avatar"><img src="${p.foto}" alt="${p.nombre}"></div>`
-    : `<div class="ficha-avatar">${emojiEspecie(p.especie)}</div>`;
+  const avatar = p.FotoURL
+    ? `<div class="ficha-avatar" onclick="document.getElementById('inputFotoFicha').click()"><img src="${p.FotoURL}"><div class="ficha-avatar-hint">cambiar</div></div>`
+    : `<div class="ficha-avatar" onclick="document.getElementById('inputFotoFicha').click()">${emojiEspecie(p.Especie)}<div class="ficha-avatar-hint">+ foto</div></div>`;
 
-  const html = `
+  document.getElementById('ficha-contenido').innerHTML = `
     <div style="height:6px"></div>
+    <input type="file" id="inputFotoFicha" accept="image/*" capture="environment" style="display:none" onchange="actualizarFotoFicha(this)">
     <div class="ficha-hero">
       ${avatar}
       <div class="ficha-datos">
-        <h2>${p.nombre}</h2>
-        <div class="especie">${p.especie} \u00b7 ${p.raza}</div>
+        <h2>${p.Nombre}</h2>
+        <div class="especie">${p.Especie} · ${p.Raza}</div>
         <div class="ficha-grid">
-          <div class="ficha-item"><label>Sexo</label><span>${p.sexo}</span></div>
-          <div class="ficha-item"><label>Edad</label><span>${calcularEdad(p.nacimiento)}</span></div>
-          <div class="ficha-item"><label>Nacimiento</label><span>${p.nacimiento ? formatFecha(p.nacimiento) : '\u2013'}</span></div>
-          <div class="ficha-item"><label>Color</label><span>${p.color || '\u2013'}</span></div>
+          <div class="ficha-item"><label>Sexo</label><span>${p.Sexo || '–'}</span></div>
+          <div class="ficha-item"><label>Edad</label><span>${calcularEdad(p.Nacimiento)}</span></div>
+          <div class="ficha-item"><label>Nacimiento</label><span>${formatFecha(p.Nacimiento)}</span></div>
+          <div class="ficha-item"><label>Color</label><span>${p.Color || '–'}</span></div>
         </div>
       </div>
     </div>
@@ -1343,199 +858,252 @@ function renderFicha() {
     <div class="dueno-card">
       <div class="icon">👤</div>
       <div class="dueno-info">
-        <h4>${p.dueno}</h4>
-        <p>📞 ${p.tel} \u00b7 📍 ${p.dir}</p>
+        <h4>${p.Dueno || '–'}</h4>
+        <p>📞 ${p.Tel || '–'} · 📍 ${p.Dir || '–'}</p>
       </div>
     </div>
 
     <div class="tabs-wrap">
       <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab(this,'todos')">Todo</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'consulta')">😷 Consultas</button>
+        <button class="tab-btn" onclick="cambiarTab(this,'consulta')">🩺 Consultas</button>
         <button class="tab-btn" onclick="cambiarTab(this,'vacuna')">💉 Vacunas</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'cirugia')">🔬 Cirug\u00edas</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'receta')">💊 Recetas</button>
+        <button class="tab-btn" onclick="cambiarTab(this,'cirugia')">🔬 Cirugías</button>
+        <button class="tab-btn" onclick="cambiarTab(this,'control')">⚖️ Controles</button>
         <button class="tab-btn" onclick="cambiarTab(this,'desparasitacion')">🐛 Desparasitaciones</button>
       </div>
     </div>
-
     <div id="timeline-eventos"></div>
   `;
-  document.getElementById('ficha-contenido').innerHTML = html;
-  renderTimeline('todos');
 }
 
+async function actualizarFotoFicha(input) {
+  const file = input.files[0];
+  if (!file) return;
+  mostrarToast('⏳ Subiendo foto...');
+  try {
+    const url = await subirFotoCloudinary(file);
+    await apiPost({ action: "editPaciente", paciente: { ID: pacienteActual.ID, FotoURL: url } });
+    pacienteActual.FotoURL = url;
+    pacientesData = pacientesData.map(p => p.ID === pacienteActual.ID ? { ...p, FotoURL: url } : p);
+    renderFichaShell();
+    renderTimeline(document.querySelector('.tab-btn.active')?.getAttribute('data-tipo') || 'todos');
+    mostrarToast('✅ Foto actualizada');
+  } catch {
+    mostrarToast('❌ Error subiendo foto', true);
+  }
+}
+
+// ── TABS / TIMELINE ───────────────────────────────────────────────────
 function cambiarTab(btn, tipo) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  btn.setAttribute('data-tipo', tipo);
   renderTimeline(tipo);
 }
 
 function renderTimeline(tipo) {
   const cont = document.getElementById('timeline-eventos');
-  let evs = eventosData.filter(e => e.pacienteId === pacienteActual.id);
-  if (tipo !== 'todos') evs = evs.filter(e => e.tipo === tipo);
-  evs.sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
+  if (!cont) return;
+  let evs = (eventosCache[pacienteActual.ID] || []).slice();
+  if (tipo !== 'todos') evs = evs.filter(e => e.Tipo === tipo);
+  evs.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
 
-  if (evs.length === 0) {
-    cont.innerHTML = `<div class="empty-state"><div class="emoji">📂</div><p>No hay registros en esta categor\u00eda</p></div>`;
+  if (!evs.length) {
+    cont.innerHTML = `<div class="empty-state"><span class="emoji">📂</span><p>No hay registros en esta categoría</p></div>`;
     return;
   }
-
-  cont.innerHTML = '<div class="timeline">' + evs.map(ev => renderEvento(ev)).join('') + '</div><div style="height:80px"></div>';
+  cont.innerHTML = `<div class="timeline">${evs.map(renderEvento).join('')}</div><div style="height:80px"></div>`;
 }
 
 function renderEvento(ev) {
-  const iconos = { consulta:'😷', vacuna:'💉', cirugia:'🔬', receta:'💊', desparasitacion:'🐛' };
-  const labels = { consulta:'Consulta', vacuna:'Vacuna', cirugia:'Cirug\u00eda / Procedimiento', receta:'Receta', desparasitacion:'Desparasitaci\u00f3n' };
+  const cfg = {
+    consulta:       { icon: '🩺', label: 'Consulta' },
+    vacuna:         { icon: '💉', label: 'Vacuna' },
+    cirugia:        { icon: '🔬', label: 'Cirugía / Procedimiento' },
+    control:        { icon: '⚖️', label: 'Control' },
+    desparasitacion:{ icon: '🐛', label: 'Desparasitación' }
+  };
+  const c = cfg[ev.Tipo] || { icon: '📋', label: ev.Tipo };
 
   let cuerpo = '';
-  if (ev.tipo === 'consulta') {
-    cuerpo = `<div class="evento-titulo">${ev.motivo}</div>
-    <div class="evento-detalle"><b>Diagn\u00f3stico:</b> ${ev.diagnostico}<br><b>Tratamiento:</b> ${ev.tratamiento}${ev.obs ? `<br><i>${ev.obs}</i>` : ''}</div>`;
-  } else if (ev.tipo === 'vacuna') {
-    cuerpo = `<div class="evento-titulo">${ev.vacuna}</div>
-    <div class="evento-detalle">Dosis: ${ev.dosis} \u00b7 Lote: ${ev.lote}</div>
-    ${ev.proxRefuerzo ? `<div class="evento-proxima">\u23f0 Pr\u00f3ximo refuerzo: ${formatFecha(ev.proxRefuerzo)}</div>` : ''}`;
-  } else if (ev.tipo === 'cirugia') {
-    cuerpo = `<div class="evento-titulo">${ev.procedimiento}</div>
-    <div class="evento-detalle"><b>Anestesia:</b> ${ev.anestesia}${ev.obs ? `<br>${ev.obs}` : ''}</div>`;
-  } else if (ev.tipo === 'receta') {
-    cuerpo = `<div class="evento-titulo">${ev.medicamento}</div>
-    <div class="evento-detalle">Dosis: ${ev.dosis} \u00b7 Duraci\u00f3n: ${ev.duracion}<br><i>${ev.indicaciones}</i></div>`;
-  } else if (ev.tipo === 'desparasitacion') {
-    cuerpo = `<div class="evento-titulo">${ev.producto}</div>
-    <div class="evento-detalle">Dosis: ${ev.dosis} \u00b7 V\u00eda: ${ev.via}</div>
-    ${ev.proxAplicacion ? `<div class="evento-proxima">\u23f0 Pr\u00f3xima aplicaci\u00f3n: ${formatFecha(ev.proxAplicacion)}</div>` : ''}`;
+  if (ev.Tipo === 'consulta') {
+    cuerpo = `<div class="evento-titulo">${ev.Motivo || '–'}</div>
+    <div class="evento-detalle"><b>Diagnóstico:</b> ${ev.Diagnostico || '–'}<br><b>Tratamiento:</b> ${ev.Tratamiento || '–'}${ev.Obs ? `<br><i>${ev.Obs}</i>` : ''}</div>`;
+  } else if (ev.Tipo === 'vacuna') {
+    cuerpo = `<div class="evento-titulo">${ev.Vacuna || '–'}</div>
+    <div class="evento-detalle">Dosis: ${ev.Dosis || '–'} · Lote: ${ev.Lote || '–'}</div>
+    ${ev.ProxRefuerzo ? `<div class="evento-proxima">⏰ Próximo refuerzo: ${formatFecha(ev.ProxRefuerzo)}</div>` : ''}`;
+  } else if (ev.Tipo === 'cirugia') {
+    cuerpo = `<div class="evento-titulo">${ev.Procedimiento || '–'}</div>
+    <div class="evento-detalle"><b>Anestesia:</b> ${ev.Anestesia || '–'}${ev.Obs ? `<br>${ev.Obs}` : ''}</div>`;
+  } else if (ev.Tipo === 'control') {
+    cuerpo = `<div class="evento-titulo">Control de rutina</div>
+    <div class="evento-detalle"><b>Peso:</b> ${ev.Peso ? ev.Peso + ' kg' : '–'} &nbsp;|&nbsp; <b>Temp:</b> ${ev.Temperatura ? ev.Temperatura + '°C' : '–'}<br><b>Condición:</b> ${ev.Condicion || '–'}${ev.Obs ? `<br><i>${ev.Obs}</i>` : ''}</div>`;
+  } else if (ev.Tipo === 'desparasitacion') {
+    cuerpo = `<div class="evento-titulo">${ev.Producto || '–'}</div>
+    <div class="evento-detalle">Dosis: ${ev.Dosis || '–'} · Vía: ${ev.Via || '–'}</div>
+    ${ev.ProxAplicacion ? `<div class="evento-proxima">⏰ Próxima aplicación: ${formatFecha(ev.ProxAplicacion)}</div>` : ''}`;
   }
 
   return `
-  <div class="evento-card ${ev.tipo}">
+  <div class="evento-card ${ev.Tipo}">
     <div class="evento-header">
-      <span class="evento-icon">${iconos[ev.tipo]}</span>
-      <span class="evento-tipo">${labels[ev.tipo]}</span>
-      <span class="evento-fecha">${formatFecha(ev.fecha)}</span>
+      <span class="evento-icon">${c.icon}</span>
+      <span class="evento-tipo">${c.label}</span>
+      <span class="evento-fecha">${formatFecha(ev.Fecha)}</span>
     </div>
     ${cuerpo}
   </div>`;
 }
 
-// ── MODAL EVENTO ───────────────────────────────────────────────────
+// ── GUARDAR EVENTO ────────────────────────────────────────────────────
 function abrirModalEvento() {
-  const hoy = new Date().toISOString().split('T')[0];
-  document.getElementById('ev-fecha').value = hoy;
+  document.getElementById('ev-fecha').value = new Date().toISOString().split('T')[0];
   selTipo(document.querySelector('.tipo-btn'), 'consulta');
   document.getElementById('modalEvento').classList.add('open');
 }
 
 function selTipo(btn, tipo) {
-  tipoEventoSeleccionado = tipo;
+  tipoEvento = tipo;
   document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   document.querySelectorAll('.form-evento').forEach(f => f.style.display = 'none');
   document.getElementById('form-' + tipo).style.display = '';
 }
 
-function guardarEvento() {
+async function guardarEvento() {
   const fecha = document.getElementById('ev-fecha').value;
-  if (!fecha) { mostrarToast('\u26a0\ufe0f Ingres\u00e1 la fecha'); return; }
+  if (!fecha) { mostrarToast('⚠️ Ingresá la fecha', true); return; }
 
-  let ev = { id: Date.now(), pacienteId: pacienteActual.id, tipo: tipoEventoSeleccionado, fecha };
+  const btn = document.getElementById('btnGuardarEvento');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
 
-  if (tipoEventoSeleccionado === 'consulta') {
-    ev.motivo = document.getElementById('ev-motivo').value || 'Sin especificar';
-    ev.diagnostico = document.getElementById('ev-diagnostico').value || '\u2013';
-    ev.tratamiento = document.getElementById('ev-tratamiento').value || '\u2013';
-    ev.obs = document.getElementById('ev-obs-consulta').value;
-  } else if (tipoEventoSeleccionado === 'vacuna') {
-    ev.vacuna = document.getElementById('ev-vacuna').value || 'Sin especificar';
-    ev.dosis = document.getElementById('ev-dosis-vac').value || '\u2013';
-    ev.lote = document.getElementById('ev-lote').value || '\u2013';
-    ev.proxRefuerzo = document.getElementById('ev-prox-vac').value;
-  } else if (tipoEventoSeleccionado === 'cirugia') {
-    ev.procedimiento = document.getElementById('ev-cirugia').value || 'Sin especificar';
-    ev.anestesia = document.getElementById('ev-anestesia').value || '\u2013';
-    ev.obs = document.getElementById('ev-obs-cir').value;
-  } else if (tipoEventoSeleccionado === 'receta') {
-    ev.medicamento = document.getElementById('ev-medicamento').value || 'Sin especificar';
-    ev.dosis = document.getElementById('ev-dosis-rec').value || '\u2013';
-    ev.duracion = document.getElementById('ev-duracion').value || '\u2013';
-    ev.indicaciones = document.getElementById('ev-indicaciones').value || '';
-  } else if (tipoEventoSeleccionado === 'desparasitacion') {
-    ev.producto = document.getElementById('ev-producto').value || 'Sin especificar';
-    ev.dosis = document.getElementById('ev-dosis-des').value || '\u2013';
-    ev.via = document.getElementById('ev-via').value;
-    ev.proxAplicacion = document.getElementById('ev-prox-des').value;
+  const ev = { PacienteID: pacienteActual.ID, Tipo: tipoEvento, Fecha: fecha };
+
+  if (tipoEvento === 'consulta') {
+    ev.Motivo      = document.getElementById('ev-motivo').value;
+    ev.Diagnostico = document.getElementById('ev-diagnostico').value;
+    ev.Tratamiento = document.getElementById('ev-tratamiento').value;
+    ev.Obs         = document.getElementById('ev-obs-consulta').value;
+  } else if (tipoEvento === 'vacuna') {
+    ev.Vacuna      = document.getElementById('ev-vacuna').value;
+    ev.Dosis       = document.getElementById('ev-dosis-vac').value;
+    ev.Lote        = document.getElementById('ev-lote').value;
+    ev.ProxRefuerzo = document.getElementById('ev-prox-vac').value;
+  } else if (tipoEvento === 'cirugia') {
+    ev.Procedimiento = document.getElementById('ev-cirugia').value;
+    ev.Anestesia     = document.getElementById('ev-anestesia').value;
+    ev.Obs           = document.getElementById('ev-obs-cir').value;
+  } else if (tipoEvento === 'control') {
+    ev.Peso        = document.getElementById('ev-peso').value;
+    ev.Temperatura = document.getElementById('ev-temperatura').value;
+    ev.Condicion   = document.getElementById('ev-condicion').value;
+    ev.Obs         = document.getElementById('ev-obs-control').value;
+  } else if (tipoEvento === 'desparasitacion') {
+    ev.Producto       = document.getElementById('ev-producto').value;
+    ev.Dosis          = document.getElementById('ev-dosis-des').value;
+    ev.Via            = document.getElementById('ev-via').value;
+    ev.ProxAplicacion = document.getElementById('ev-prox-des').value;
   }
 
-  eventosData.push(ev);
-  cerrarModal('modalEvento');
-  renderTimeline(document.querySelector('.tab-btn.active')?.textContent.includes('Todo') ? 'todos' : tipoEventoSeleccionado);
-  mostrarToast('\u2705 Registro guardado');
+  try {
+    const res = await apiPost({ action: "addEvento", evento: ev });
+    if (res.error) throw new Error(res.error);
+    ev.ID = res.id;
+    if (!eventosCache[pacienteActual.ID]) eventosCache[pacienteActual.ID] = [];
+    eventosCache[pacienteActual.ID].push(ev);
+    cerrarModal('modalEvento');
+    renderTimeline('todos');
+    // reset tab a "todo"
+    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); if (b.textContent.trim() === 'Todo') b.classList.add('active'); });
+    mostrarToast('✅ Registro guardado');
+    actualizarStats();
+  } catch (err) {
+    mostrarToast('❌ Error al guardar', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Guardar registro';
+  }
 }
 
-// ── MODAL PACIENTE ──────────────────────────────────────────────────
+// ── GUARDAR PACIENTE ──────────────────────────────────────────────────
 function abrirModalPaciente() {
+  fotoURLPendiente = '';
+  document.getElementById('fotoPreview').classList.remove('visible');
+  document.getElementById('fotoPlaceholder').style.display = '';
+  document.getElementById('fotoUploading').textContent = '⏳ Subiendo foto...';
+  document.getElementById('fotoUploading').classList.remove('visible');
   document.getElementById('modalPaciente').classList.add('open');
 }
 
-function guardarPaciente() {
+async function guardarPaciente() {
   const nombre = document.getElementById('np-nombre').value.trim();
-  const dueno = document.getElementById('np-dueno').value.trim();
-  if (!nombre) { mostrarToast('\u26a0\ufe0f Ingres\u00e1 el nombre del paciente'); return; }
+  if (!nombre) { mostrarToast('⚠️ Ingresá el nombre del paciente', true); return; }
 
-  const nuevo = {
-    id: Date.now(),
-    nombre,
-    especie: document.getElementById('np-especie').value,
-    raza: document.getElementById('np-raza').value || 'Mestizo',
-    sexo: document.getElementById('np-sexo').value,
-    nacimiento: document.getElementById('np-nacimiento').value,
-    color: document.getElementById('np-color').value,
-    foto: null,
-    dueno: dueno || 'Sin especificar',
-    tel: document.getElementById('np-tel').value || '\u2013',
-    dir: document.getElementById('np-dir').value || '\u2013',
+  const btn = document.getElementById('btnGuardarPaciente');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+
+  const paciente = {
+    Nombre:     nombre,
+    Especie:    document.getElementById('np-especie').value,
+    Raza:       document.getElementById('np-raza').value || 'Mestizo',
+    Sexo:       document.getElementById('np-sexo').value,
+    Nacimiento: document.getElementById('np-nacimiento').value,
+    Color:      document.getElementById('np-color').value,
+    FotoURL:    fotoURLPendiente,
+    Dueno:      document.getElementById('np-dueno').value,
+    Tel:        document.getElementById('np-tel').value,
+    Dir:        document.getElementById('np-dir').value,
   };
 
-  pacientesData.push(nuevo);
-  document.getElementById('statTotal').textContent = pacientesData.length;
-  cerrarModal('modalPaciente');
-  renderLista(pacientesData);
-  mostrarToast('\u2705 Paciente registrado: ' + nombre);
-
-  ['np-nombre','np-raza','np-color','np-nacimiento','np-dueno','np-tel','np-dir'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  try {
+    const res = await apiPost({ action: "addPaciente", paciente });
+    if (res.error) throw new Error(res.error);
+    paciente.ID = res.id;
+    pacientesData.push(paciente);
+    eventosCache[paciente.ID] = [];
+    document.getElementById('statTotal').textContent = pacientesData.length;
+    cerrarModal('modalPaciente');
+    renderLista(pacientesData);
+    mostrarToast('✅ Paciente registrado');
+    ['np-nombre','np-raza','np-color','np-nacimiento','np-dueno','np-tel','np-dir'].forEach(id => document.getElementById(id).value = '');
+    fotoURLPendiente = '';
+  } catch {
+    mostrarToast('❌ Error al guardar', true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Guardar paciente';
+  }
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────
-function cerrarModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
+function cerrarModal(id) { document.getElementById(id).classList.remove('open'); }
 
-function formatFecha(fecha) {
-  if (!fecha) return '\u2013';
-  const [y,m,d] = fecha.split('-');
+function formatFecha(f) {
+  if (!f) return '–';
+  const s = String(f);
+  if (!s.includes('-')) return s;
+  const [y, m, d] = s.split('-');
   return `${d}/${m}/${y}`;
 }
 
-function mostrarToast(msg) {
+function mostrarToast(msg, esError = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
+  t.className = 'toast' + (esError ? ' error' : '');
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// cerrar modales tocando fuera
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
 });
 
-// ── INIT ──────────────────────────────────────────────────────────────
-renderLista(pacientesData);
+// ── ARRANQUE ──────────────────────────────────────────────────────────
+init();
 </script>
 </body>
 </html>
