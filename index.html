@@ -30,467 +30,224 @@
     --info-dim: rgba(59,130,246,0.12);
     --purple: #a78bfa;
     --purple-dim: rgba(167,139,250,0.12);
+    --teal: #06b6d4;
+    --teal-dim: rgba(6,182,212,0.12);
+    --pink: #ec4899;
+    --pink-dim: rgba(236,72,153,0.12);
     --glass: rgba(17,24,39,0.85);
     --glass-border: rgba(255,255,255,0.08);
-    --radius: 20px;
-    --radius-lg: 24px;
-    --radius-sm: 14px;
-    --radius-xs: 10px;
+    --radius: 20px; --radius-lg: 24px; --radius-sm: 14px; --radius-xs: 10px;
     --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
     --shadow: 0 4px 24px rgba(0,0,0,0.4);
     --shadow-glow: 0 0 30px rgba(16,185,129,0.08);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-    max-width: 480px;
-    margin: 0 auto;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; max-width: 480px; margin: 0 auto; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   ::-webkit-scrollbar { width: 0; height: 0; }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0.5; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-  }
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 2px 12px rgba(16,185,129,0.35); }
-    50% { box-shadow: 0 2px 20px rgba(16,185,129,0.6); }
-  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideUp { from { transform:translateY(100%); opacity:0.5; } to { transform:translateY(0); opacity:1; } }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-3px); } }
+  @keyframes pulseGlow { 0%,100% { box-shadow:0 2px 12px rgba(16,185,129,0.35); } 50% { box-shadow:0 2px 20px rgba(16,185,129,0.6); } }
 
-  /* ── HEADER ── */
-  .header {
-    background: var(--glass);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 14px 20px 12px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .header-back {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    width: 38px; height: 38px;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-  .header-back.visible { display: flex; }
-  .header-back:active { transform: scale(0.92); }
-  .header-title { flex: 1; }
-  .header-title h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .header-title p { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
-  .header-add {
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    border: none;
-    color: #000;
-    width: 38px; height: 38px;
-    border-radius: 12px;
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    animation: pulseGlow 3s ease-in-out infinite;
-    transition: transform 0.2s;
-  }
-  .header-add:active { transform: scale(0.92); }
+  /* HEADER */
+  .header { background:var(--glass); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border-bottom:1px solid var(--glass-border); padding:14px 20px 12px; position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:12px; }
+  .header-back { background:var(--surface); border:1px solid var(--border); color:var(--text-primary); width:38px; height:38px; border-radius:12px; font-size:16px; cursor:pointer; display:none; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
+  .header-back.visible { display:flex; }
+  .header-back:active { transform:scale(0.92); }
+  .header-title { flex:1; }
+  .header-title h1 { font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.02em; background:linear-gradient(135deg,var(--text-primary) 0%,var(--accent-light) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .header-title p { font-size:11px; color:var(--text-muted); margin-top:3px; font-weight:500; }
+  .header-add { background:linear-gradient(135deg,var(--accent),var(--accent-light)); border:none; color:#000; width:38px; height:38px; border-radius:12px; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; animation:pulseGlow 3s ease-in-out infinite; transition:transform 0.2s; }
+  .header-add:active { transform:scale(0.92); }
 
-  /* ── SCREENS ── */
-  .screen { display: none; padding: 16px 18px; animation: fadeIn 0.35s ease; }
-  .screen.active { display: block; }
+  /* SCREENS */
+  .screen { display:none; padding:16px 18px; animation:fadeIn 0.35s ease; }
+  .screen.active { display:block; }
 
-  /* ── LOADING ── */
-  .loading-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    gap: 16px;
-    color: var(--text-muted);
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .spinner {
-    width: 32px; height: 32px;
-    border: 3px solid var(--border-strong);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
+  /* LOADING */
+  .loading-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; gap:16px; color:var(--text-muted); font-size:13px; font-weight:500; }
+  .spinner { width:32px; height:32px; border:3px solid var(--border-strong); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
 
-  /* ── SEARCH ── */
-  .search-wrap { position: relative; margin-bottom: 18px; }
-  .search-wrap input {
-    width: 100%;
-    padding: 14px 16px 14px 46px;
-    border-radius: var(--radius);
-    border: 1.5px solid var(--border);
-    background: var(--surface);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
-    outline: none;
-    transition: all 0.25s;
-  }
-  .search-wrap input::placeholder { color: var(--text-muted); }
-  .search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-  .search-wrap .icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--text-muted); }
+  /* SEARCH */
+  .search-wrap { position:relative; margin-bottom:18px; }
+  .search-wrap input { width:100%; padding:14px 16px 14px 46px; border-radius:var(--radius); border:1.5px solid var(--border); background:var(--surface); font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:500; color:var(--text-primary); outline:none; transition:all 0.25s; }
+  .search-wrap input::placeholder { color:var(--text-muted); }
+  .search-wrap input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
+  .search-wrap .icon { position:absolute; left:16px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--text-muted); }
 
-  /* ── STATS ── */
-  .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; }
-  .stat-chip {
-    flex: 1;
-    background: linear-gradient(145deg, var(--surface), var(--bg-elevated));
-    border-radius: var(--radius-sm);
-    padding: 14px 10px;
-    text-align: center;
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-chip::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    opacity: 0.6;
-  }
-  .stat-chip .num {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--accent-light);
-    line-height: 1;
-  }
-  .stat-chip .lbl { font-size: 10px; color: var(--text-muted); margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  /* STATS */
+  .stats-bar { display:flex; gap:10px; margin-bottom:20px; }
+  .stat-chip { flex:1; background:linear-gradient(145deg,var(--surface),var(--bg-elevated)); border-radius:var(--radius-sm); padding:14px 10px; text-align:center; border:1px solid var(--border); position:relative; overflow:hidden; }
+  .stat-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent-light)); opacity:0.6; }
+  .stat-chip .num { font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; color:var(--accent-light); line-height:1; }
+  .stat-chip .lbl { font-size:10px; color:var(--text-muted); margin-top:5px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; }
 
-  /* ── SECTION LABEL ── */
-  .section-label {
-    font-size: 11px; font-weight: 700; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .section-label::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+  /* SECTION LABEL */
+  .section-label { font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .section-label::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--accent); }
 
-  /* ── PATIENT CARDS ── */
-  .patient-card {
-    background: linear-gradient(145deg, var(--surface), rgba(26,34,54,0.8));
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 12px;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    animation: fadeIn 0.4s ease forwards;
-    opacity: 0;
-  }
-  .patient-card:active { transform: scale(0.97); }
-  .patient-avatar {
-    width: 56px; height: 56px;
-    border-radius: var(--radius-sm);
-    flex-shrink: 0;
-    background: linear-gradient(135deg, var(--surface-light), var(--bg-elevated));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    overflow: hidden;
-    border: 2px solid var(--border-strong);
-  }
-  .patient-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .patient-info { flex: 1; min-width: 0; }
-  .patient-name { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .patient-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
-  .patient-badges { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-  .badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid transparent; }
-  .badge-especie { background: var(--accent-dim); color: var(--accent-light); border-color: rgba(16,185,129,0.15); }
-  .badge-alerta { background: var(--warning-dim); color: var(--warning); border-color: rgba(245,158,11,0.15); }
-  .patient-arrow { font-size: 18px; color: var(--text-muted); flex-shrink: 0; }
+  /* PATIENT CARDS */
+  .patient-card { background:linear-gradient(145deg,var(--surface),rgba(26,34,54,0.8)); border-radius:var(--radius); padding:16px; margin-bottom:12px; border:1px solid var(--border); display:flex; align-items:center; gap:14px; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden; animation:fadeIn 0.4s ease forwards; opacity:0; }
+  .patient-card:active { transform:scale(0.97); }
+  .patient-avatar { width:56px; height:56px; border-radius:var(--radius-sm); flex-shrink:0; background:linear-gradient(135deg,var(--surface-light),var(--bg-elevated)); display:flex; align-items:center; justify-content:center; font-size:28px; overflow:hidden; border:2px solid var(--border-strong); }
+  .patient-avatar img { width:100%; height:100%; object-fit:cover; }
+  .patient-info { flex:1; min-width:0; }
+  .patient-name { font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .patient-sub { font-size:12px; color:var(--text-muted); margin-top:3px; font-weight:500; }
+  .patient-badges { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+  .badge { font-size:10px; font-weight:700; padding:4px 10px; border-radius:20px; border:1px solid transparent; }
+  .badge-especie { background:var(--accent-dim); color:var(--accent-light); border-color:rgba(16,185,129,0.15); }
+  .badge-alerta { background:var(--warning-dim); color:var(--warning); border-color:rgba(245,158,11,0.15); }
+  .patient-arrow { font-size:18px; color:var(--text-muted); flex-shrink:0; }
 
-  /* ── FICHA ── */
-  .ficha-hero {
-    background: linear-gradient(145deg, var(--surface), rgba(26,34,54,0.9));
-    border-radius: var(--radius-lg);
-    padding: 22px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow), var(--shadow-glow);
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    position: relative;
-    overflow: hidden;
-  }
-  .ficha-hero::before {
-    content: '';
-    position: absolute;
-    top: -50%; right: -50%;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-    opacity: 0.4;
-    pointer-events: none;
-  }
-  .ficha-avatar {
-    width: 84px; height: 84px;
-    border-radius: var(--radius);
-    flex-shrink: 0;
-    background: linear-gradient(135deg, var(--surface-light), var(--bg-elevated));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 40px;
-    overflow: hidden;
-    border: 2px solid var(--accent);
-    box-shadow: 0 4px 16px rgba(16,185,129,0.2);
-    position: relative; z-index: 1;
-    cursor: pointer;
-  }
-  .ficha-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .ficha-avatar-hint {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: rgba(0,0,0,0.55);
-    font-size: 10px;
-    text-align: center;
-    padding: 4px 0;
-    color: white;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-  }
-  .ficha-datos { flex: 1; position: relative; z-index: 1; }
-  .ficha-datos h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
-  .ficha-datos .especie { font-size: 12px; color: var(--accent-light); font-weight: 600; margin-top: 4px; }
-  .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-  .ficha-item { background: rgba(255,255,255,0.03); border-radius: var(--radius-xs); padding: 10px 12px; border: 1px solid var(--border); }
-  .ficha-item label { font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 3px; }
-  .ficha-item span { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  /* FICHA */
+  .ficha-hero { background:linear-gradient(145deg,var(--surface),rgba(26,34,54,0.9)); border-radius:var(--radius-lg); padding:22px; margin-bottom:16px; border:1px solid var(--border); box-shadow:var(--shadow),var(--shadow-glow); display:flex; gap:18px; align-items:flex-start; position:relative; overflow:hidden; }
+  .ficha-hero::before { content:''; position:absolute; top:-50%; right:-50%; width:200px; height:200px; background:radial-gradient(circle,var(--accent-glow),transparent 70%); opacity:0.4; pointer-events:none; }
+  .ficha-avatar { width:84px; height:84px; border-radius:var(--radius); flex-shrink:0; background:linear-gradient(135deg,var(--surface-light),var(--bg-elevated)); display:flex; align-items:center; justify-content:center; font-size:40px; overflow:hidden; border:2px solid var(--accent); box-shadow:0 4px 16px rgba(16,185,129,0.2); position:relative; z-index:1; cursor:pointer; }
+  .ficha-avatar img { width:100%; height:100%; object-fit:cover; }
+  .ficha-avatar-hint { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); font-size:10px; text-align:center; padding:4px 0; color:white; font-weight:700; }
+  .ficha-datos { flex:1; position:relative; z-index:1; }
+  .ficha-datos h2 { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.02em; }
+  .ficha-datos .especie { font-size:12px; color:var(--accent-light); font-weight:600; margin-top:4px; }
+  .ficha-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .ficha-item { background:rgba(255,255,255,0.03); border-radius:var(--radius-xs); padding:10px 12px; border:1px solid var(--border); }
+  .ficha-item label { font-size:9px; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:3px; }
+  .ficha-item span { font-size:13px; font-weight:600; color:var(--text-secondary); }
+  .dueno-card { background:linear-gradient(135deg,var(--accent-dim),rgba(16,185,129,0.05)); border:1px solid rgba(16,185,129,0.12); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:16px; display:flex; align-items:center; gap:14px; }
+  .dueno-card .icon { font-size:20px; width:42px; height:42px; border-radius:12px; background:var(--accent-dim); display:flex; align-items:center; justify-content:center; border:1px solid rgba(16,185,129,0.15); }
+  .dueno-card .dueno-info h4 { font-size:14px; font-weight:700; }
+  .dueno-card .dueno-info p { font-size:12px; color:var(--text-muted); margin-top:2px; }
 
-  .dueno-card {
-    background: linear-gradient(135deg, var(--accent-dim), rgba(16,185,129,0.05));
-    border: 1px solid rgba(16,185,129,0.12);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .dueno-card .icon { font-size: 20px; width: 42px; height: 42px; border-radius: 12px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16,185,129,0.15); }
-  .dueno-card .dueno-info h4 { font-size: 14px; font-weight: 700; }
-  .dueno-card .dueno-info p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  /* TABS — solo 3 ahora */
+  .tabs-wrap { margin-bottom:18px; }
+  .tabs { display:flex; gap:8px; }
+  .tab-btn { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:30px; padding:10px 8px; font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; color:var(--text-muted); cursor:pointer; white-space:nowrap; transition:all 0.25s; text-align:center; }
+  .tab-btn:active { transform:scale(0.94); }
+  .tab-btn.active { background:linear-gradient(135deg,var(--accent),var(--accent-light)); color:#000; border-color:transparent; box-shadow:0 2px 12px rgba(16,185,129,0.35); font-weight:700; }
 
-  /* ── TABS ── */
-  .tabs-wrap { overflow-x: auto; scrollbar-width: none; margin-bottom: 18px; -webkit-overflow-scrolling: touch; }
-  .tabs-wrap::-webkit-scrollbar { display: none; }
-  .tabs { display: flex; gap: 8px; width: max-content; }
-  .tab-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    padding: 9px 18px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px; font-weight: 600;
-    color: var(--text-muted);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.25s;
-  }
-  .tab-btn:active { transform: scale(0.94); }
-  .tab-btn.active { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #000; border-color: transparent; box-shadow: 0 2px 12px rgba(16,185,129,0.35); font-weight: 700; }
+  /* TIMELINE */
+  .timeline { position:relative; padding-left:8px; }
+  .timeline::before { content:''; position:absolute; left:19px; top:8px; bottom:80px; width:2px; background:linear-gradient(180deg,var(--accent),var(--surface-light),transparent); opacity:0.3; }
+  .evento-card { background:linear-gradient(145deg,var(--surface),rgba(26,34,54,0.8)); border-radius:var(--radius-sm); padding:16px; margin-bottom:12px; margin-left:28px; border:1px solid var(--border); position:relative; animation:fadeIn 0.4s ease forwards; opacity:0; }
+  .evento-card::before { content:''; position:absolute; left:-22px; top:20px; width:10px; height:10px; border-radius:50%; background:var(--surface); border:2.5px solid var(--accent); box-shadow:0 0 0 3px var(--bg); z-index:2; }
+  .evento-card.vacuna::before { border-color:var(--info); }
+  .evento-card.cirugia::before { border-color:var(--danger); }
+  .evento-card.control::before { border-color:var(--purple); }
+  .evento-card.desparasitacion::before { border-color:var(--warning); }
+  .evento-card.laboratorio::before { border-color:var(--teal); }
+  .evento-card.estudios::before { border-color:var(--pink); }
+  .evento-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .evento-icon { font-size:15px; width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; background:var(--accent-dim); flex-shrink:0; }
+  .evento-card.vacuna .evento-icon { background:var(--info-dim); }
+  .evento-card.cirugia .evento-icon { background:var(--danger-dim); }
+  .evento-card.control .evento-icon { background:var(--purple-dim); }
+  .evento-card.desparasitacion .evento-icon { background:var(--warning-dim); }
+  .evento-card.laboratorio .evento-icon { background:var(--teal-dim); }
+  .evento-card.estudios .evento-icon { background:var(--pink-dim); }
+  .evento-tipo { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-light); }
+  .evento-card.vacuna .evento-tipo { color:#60a5fa; }
+  .evento-card.cirugia .evento-tipo { color:#fb7185; }
+  .evento-card.control .evento-tipo { color:#c4b5fd; }
+  .evento-card.desparasitacion .evento-tipo { color:#fbbf24; }
+  .evento-card.laboratorio .evento-tipo { color:#22d3ee; }
+  .evento-card.estudios .evento-tipo { color:#f472b6; }
+  .evento-fecha { margin-left:auto; font-size:11px; color:var(--text-muted); font-weight:600; background:rgba(255,255,255,0.04); padding:3px 10px; border-radius:20px; border:1px solid var(--border); white-space:nowrap; }
+  .evento-titulo { font-size:14px; font-weight:700; margin-bottom:6px; }
+  .evento-detalle { font-size:12px; color:var(--text-secondary); line-height:1.65; }
+  .evento-proxima { margin-top:10px; font-size:11px; background:var(--warning-dim); border-radius:var(--radius-xs); padding:8px 12px; color:var(--warning); font-weight:600; border:1px solid rgba(245,158,11,0.12); }
 
-  /* ── TIMELINE ── */
-  .timeline { position: relative; padding-left: 8px; }
-  .timeline::before { content: ''; position: absolute; left: 19px; top: 8px; bottom: 80px; width: 2px; background: linear-gradient(180deg, var(--accent), var(--surface-light), transparent); opacity: 0.3; }
+  /* ADJUNTO en timeline */
+  .adjunto-wrap { margin-top:12px; }
+  .adjunto-img { width:100%; max-height:200px; object-fit:cover; border-radius:var(--radius-xs); border:1px solid var(--border); cursor:pointer; transition:opacity 0.2s; }
+  .adjunto-img:active { opacity:0.8; }
+  .adjunto-pdf-btn { display:inline-flex; align-items:center; gap:8px; background:var(--surface-light); border:1px solid var(--border); border-radius:var(--radius-xs); padding:10px 14px; font-size:12px; font-weight:700; color:var(--text-secondary); cursor:pointer; text-decoration:none; transition:all 0.2s; margin-top:4px; }
+  .adjunto-pdf-btn:active { background:var(--surface); }
 
-  .evento-card {
-    background: linear-gradient(145deg, var(--surface), rgba(26,34,54,0.8));
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    margin-bottom: 12px;
-    margin-left: 28px;
-    border: 1px solid var(--border);
-    position: relative;
-    animation: fadeIn 0.4s ease forwards;
-    opacity: 0;
-  }
-  .evento-card::before { content: ''; position: absolute; left: -22px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2.5px solid var(--accent); box-shadow: 0 0 0 3px var(--bg); z-index: 2; }
-  .evento-card.vacuna::before { border-color: var(--info); }
-  .evento-card.cirugia::before { border-color: var(--danger); }
-  .evento-card.control::before { border-color: var(--purple); }
-  .evento-card.desparasitacion::before { border-color: var(--warning); }
+  /* EMPTY */
+  .empty-state { text-align:center; padding:50px 24px; color:var(--text-muted); }
+  .empty-state .emoji { font-size:44px; margin-bottom:14px; opacity:0.6; display:block; }
+  .empty-state p { font-size:13px; font-weight:500; }
 
-  .evento-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .evento-icon { font-size: 15px; width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--accent-dim); flex-shrink: 0; }
-  .evento-card.vacuna .evento-icon { background: var(--info-dim); }
-  .evento-card.cirugia .evento-icon { background: var(--danger-dim); }
-  .evento-card.control .evento-icon { background: var(--purple-dim); }
-  .evento-card.desparasitacion .evento-icon { background: var(--warning-dim); }
-  .evento-tipo { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-light); }
-  .evento-card.vacuna .evento-tipo { color: #60a5fa; }
-  .evento-card.cirugia .evento-tipo { color: #fb7185; }
-  .evento-card.control .evento-tipo { color: #c4b5fd; }
-  .evento-card.desparasitacion .evento-tipo { color: #fbbf24; }
-  .evento-fecha { margin-left: auto; font-size: 11px; color: var(--text-muted); font-weight: 600; background: rgba(255,255,255,0.04); padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); white-space: nowrap; }
-  .evento-titulo { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-  .evento-detalle { font-size: 12px; color: var(--text-secondary); line-height: 1.65; }
-  .evento-proxima { margin-top: 10px; font-size: 11px; background: var(--warning-dim); border-radius: var(--radius-xs); padding: 8px 12px; color: var(--warning); font-weight: 600; border: 1px solid rgba(245,158,11,0.12); }
+  /* FAB */
+  .fab-evento { position:fixed; bottom:24px; right:20px; background:linear-gradient(135deg,var(--accent),var(--accent-light)); color:#000; border:none; border-radius:var(--radius); padding:15px 22px; font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 4px 24px rgba(16,185,129,0.4); display:none; align-items:center; gap:8px; z-index:50; animation:float 4s ease-in-out infinite; }
+  .fab-evento.visible { display:flex; }
+  .fab-evento:active { transform:scale(0.93); }
 
-  /* ── EMPTY ── */
-  .empty-state { text-align: center; padding: 50px 24px; color: var(--text-muted); }
-  .empty-state .emoji { font-size: 44px; margin-bottom: 14px; opacity: 0.6; display: block; }
-  .empty-state p { font-size: 13px; font-weight: 500; }
+  /* MODAL */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(8px); z-index:200; display:none; align-items:flex-end; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:linear-gradient(180deg,var(--bg-elevated),var(--surface)); border-radius:28px 28px 0 0; width:100%; max-width:480px; max-height:92vh; overflow-y:auto; padding:8px 22px 36px; animation:slideUp 0.35s cubic-bezier(0.22,1,0.36,1); border-top:1px solid var(--glass-border); }
+  .modal-handle { width:36px; height:4px; background:var(--text-muted); border-radius:2px; margin:12px auto 20px; opacity:0.35; }
+  .modal h3 { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; margin-bottom:20px; letter-spacing:-0.02em; }
 
-  /* ── FAB ── */
-  .fab-evento {
-    position: fixed; bottom: 24px; right: 20px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    color: #000; border: none; border-radius: var(--radius);
-    padding: 15px 22px;
-    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 24px rgba(16,185,129,0.4);
-    display: none; align-items: center; gap: 8px;
-    z-index: 50;
-    animation: float 4s ease-in-out infinite;
-  }
-  .fab-evento.visible { display: flex; }
-  .fab-evento:active { transform: scale(0.93); }
+  /* FORM */
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:7px; }
+  .form-group input, .form-group select, .form-group textarea { width:100%; padding:13px 15px; border:1.5px solid var(--border); border-radius:var(--radius-xs); font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:500; outline:none; background:var(--surface); color:var(--text-primary); transition:all 0.25s; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color:var(--text-muted); font-weight:400; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); background:var(--bg-elevated); }
+  .form-group textarea { resize:vertical; min-height:84px; }
+  .form-group select { appearance:none; -webkit-appearance:none; }
+  .form-group select option { background:var(--surface); }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(8px);
-    z-index: 200;
-    display: none; align-items: flex-end; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
-    border-radius: 28px 28px 0 0;
-    width: 100%; max-width: 480px; max-height: 92vh;
-    overflow-y: auto;
-    padding: 8px 22px 36px;
-    animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    border-top: 1px solid var(--glass-border);
-  }
-  .modal-handle { width: 36px; height: 4px; background: var(--text-muted); border-radius: 2px; margin: 12px auto 20px; opacity: 0.35; }
-  .modal h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.02em; }
+  /* FOTO INPUT perfil */
+  .foto-input-wrap { border:2px dashed var(--border-strong); border-radius:var(--radius-sm); padding:20px; text-align:center; cursor:pointer; transition:all 0.25s; position:relative; overflow:hidden; margin-bottom:16px; }
+  .foto-input-wrap:active { border-color:var(--accent); background:var(--accent-dim); }
+  .foto-input-wrap input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; font-size:16px; }
+  .foto-preview { width:80px; height:80px; border-radius:12px; object-fit:cover; margin:0 auto 10px; display:none; border:2px solid var(--accent); }
+  .foto-preview.visible { display:block; }
+  .foto-icon { font-size:32px; margin-bottom:8px; }
+  .foto-label { font-size:13px; font-weight:600; color:var(--text-secondary); }
+  .foto-sub { font-size:11px; color:var(--text-muted); margin-top:4px; }
+  .foto-uploading { font-size:12px; color:var(--accent-light); font-weight:600; margin-top:6px; display:none; }
+  .foto-uploading.visible { display:block; }
 
-  /* ── FORM ── */
-  .form-group { margin-bottom: 16px; }
-  .form-group label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 7px; }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%; padding: 13px 15px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-xs);
-    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500;
-    outline: none; background: var(--surface); color: var(--text-primary);
-    transition: all 0.25s;
-  }
-  .form-group input::placeholder,
-  .form-group textarea::placeholder { color: var(--text-muted); font-weight: 400; }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: var(--bg-elevated); }
-  .form-group textarea { resize: vertical; min-height: 84px; }
-  .form-group select { appearance: none; -webkit-appearance: none; }
-  .form-group select option { background: var(--surface); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* ADJUNTO INPUT en formulario evento */
+  .adjunto-input-wrap { border:2px dashed var(--border-strong); border-radius:var(--radius-sm); padding:16px; text-align:center; cursor:pointer; transition:all 0.25s; position:relative; overflow:hidden; margin-bottom:16px; }
+  .adjunto-input-wrap:active { border-color:var(--accent); }
+  .adjunto-input-wrap input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; font-size:16px; }
+  .adjunto-preview-img { width:100%; max-height:140px; object-fit:cover; border-radius:var(--radius-xs); margin-bottom:8px; display:none; }
+  .adjunto-preview-img.visible { display:block; }
+  .adjunto-status { font-size:12px; font-weight:600; color:var(--text-muted); margin-top:4px; }
+  .adjunto-status.uploading { color:var(--accent-light); }
+  .adjunto-status.ready { color:var(--accent-light); }
+  .adjunto-status.error { color:var(--danger); }
 
-  /* ── FOTO INPUT ── */
-  .foto-input-wrap {
-    border: 2px dashed var(--border-strong);
-    border-radius: var(--radius-sm);
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 16px;
-  }
-  .foto-input-wrap:active { border-color: var(--accent); background: var(--accent-dim); }
-  .foto-input-wrap input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 16px; }
-  .foto-preview { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; margin: 0 auto 10px; display: none; border: 2px solid var(--accent); }
-  .foto-preview.visible { display: block; }
-  .foto-icon { font-size: 32px; margin-bottom: 8px; }
-  .foto-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
-  .foto-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-  .foto-uploading { font-size: 12px; color: var(--accent-light); font-weight: 600; margin-top: 6px; display: none; }
-  .foto-uploading.visible { display: block; }
+  /* TIPO SELECTOR */
+  .tipo-selector { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+  .tipo-btn { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius-xs); padding:12px 8px; text-align:center; cursor:pointer; transition:all 0.25s; font-family:'Plus Jakarta Sans',sans-serif; }
+  .tipo-btn:active { transform:scale(0.96); }
+  .tipo-btn .tipo-icon { font-size:22px; display:block; margin-bottom:5px; }
+  .tipo-btn .tipo-lbl { font-size:11px; font-weight:600; color:var(--text-muted); }
+  .tipo-btn.selected { background:var(--accent-dim); border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
+  .tipo-btn.selected .tipo-lbl { color:var(--accent-light); font-weight:700; }
 
-  /* ── TIPO SELECTOR ── */
-  .tipo-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
-  .tipo-btn { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-xs); padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.25s; font-family: 'Plus Jakarta Sans', sans-serif; }
-  .tipo-btn:active { transform: scale(0.96); }
-  .tipo-btn .tipo-icon { font-size: 22px; display: block; margin-bottom: 5px; }
-  .tipo-btn .tipo-lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); }
-  .tipo-btn.selected { background: var(--accent-dim); border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-  .tipo-btn.selected .tipo-lbl { color: var(--accent-light); font-weight: 700; }
+  /* BUTTONS */
+  .btn-primary { width:100%; background:linear-gradient(135deg,var(--accent),var(--accent-light)); color:#000; border:none; border-radius:var(--radius-sm); padding:16px; font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:700; cursor:pointer; margin-top:10px; transition:all 0.25s; box-shadow:0 4px 16px rgba(16,185,129,0.3); }
+  .btn-primary:active { transform:scale(0.97); }
+  .btn-primary:disabled { opacity:0.55; cursor:not-allowed; }
+  .btn-secondary { width:100%; background:var(--surface); color:var(--text-secondary); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:14px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; margin-top:10px; transition:all 0.2s; }
+  .btn-secondary:active { transform:scale(0.97); }
 
-  /* ── BUTTONS ── */
-  .btn-primary { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #000; border: none; border-radius: var(--radius-sm); padding: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: all 0.25s; box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
-  .btn-primary:active { transform: scale(0.97); }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-  .btn-secondary { width: 100%; background: var(--surface); color: var(--text-secondary); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.2s; }
-  .btn-secondary:active { transform: scale(0.97); }
+  /* TOAST */
+  .toast { position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,var(--accent),var(--accent-light)); color:#000; padding:12px 26px; border-radius:30px; font-size:13px; font-weight:700; z-index:300; opacity:0; transition:all 0.35s ease; white-space:nowrap; pointer-events:none; box-shadow:0 4px 20px rgba(16,185,129,0.35); }
+  .toast.show { opacity:1; }
+  .toast.error { background:linear-gradient(135deg,var(--danger),#fb7185); box-shadow:0 4px 20px rgba(244,63,94,0.35); }
 
-  /* ── TOAST ── */
-  .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #000; padding: 12px 26px; border-radius: 30px; font-size: 13px; font-weight: 700; z-index: 300; opacity: 0; transition: all 0.35s ease; white-space: nowrap; pointer-events: none; box-shadow: 0 4px 20px rgba(16,185,129,0.35); }
-  .toast.show { opacity: 1; }
-  .toast.error { background: linear-gradient(135deg, var(--danger), #fb7185); box-shadow: 0 4px 20px rgba(244,63,94,0.35); }
+  /* LIGHTBOX */
+  .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:400; display:none; align-items:center; justify-content:center; padding:20px; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:100%; max-height:90vh; border-radius:var(--radius-sm); object-fit:contain; }
+  .lightbox-close { position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.1); border:none; color:white; width:40px; height:40px; border-radius:50%; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 
-  #no-results { display: none; text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 14px; font-weight: 500; }
+  #no-results { display:none; text-align:center; padding:40px 0; color:var(--text-muted); font-size:14px; font-weight:500; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <button class="header-back" id="btnBack" onclick="volverLista()">&#8592;</button>
   <div class="header-title">
@@ -500,7 +257,6 @@
   <button class="header-add" id="btnAdd" onclick="abrirModalPaciente()">+</button>
 </div>
 
-<!-- SCREEN LISTA -->
 <div class="screen active" id="screen-lista">
   <div style="height:6px"></div>
   <div class="stats-bar">
@@ -517,12 +273,10 @@
   <div id="no-results">No se encontraron resultados 🐾</div>
 </div>
 
-<!-- SCREEN FICHA -->
 <div class="screen" id="screen-ficha">
   <div id="ficha-contenido"></div>
 </div>
 
-<!-- FAB -->
 <button class="fab-evento" id="fabEvento" onclick="abrirModalEvento()">+ Agregar registro</button>
 
 <!-- MODAL EVENTO -->
@@ -536,6 +290,8 @@
       <button class="tipo-btn" onclick="selTipo(this,'cirugia')"><span class="tipo-icon">🔬</span><span class="tipo-lbl">Cirugía</span></button>
       <button class="tipo-btn" onclick="selTipo(this,'control')"><span class="tipo-icon">⚖️</span><span class="tipo-lbl">Control</span></button>
       <button class="tipo-btn" onclick="selTipo(this,'desparasitacion')"><span class="tipo-icon">🐛</span><span class="tipo-lbl">Desparasitación</span></button>
+      <button class="tipo-btn" onclick="selTipo(this,'laboratorio')"><span class="tipo-icon">🧪</span><span class="tipo-lbl">Laboratorio</span></button>
+      <button class="tipo-btn" onclick="selTipo(this,'estudios')"><span class="tipo-icon">🫁</span><span class="tipo-lbl">Estudios</span></button>
     </div>
 
     <div id="form-consulta" class="form-evento">
@@ -544,6 +300,7 @@
       <div class="form-group"><label>Tratamiento</label><textarea id="ev-tratamiento" placeholder="Describí el tratamiento..."></textarea></div>
       <div class="form-group"><label>Observaciones</label><textarea id="ev-obs-consulta" placeholder="Notas adicionales..." style="min-height:60px"></textarea></div>
     </div>
+
     <div id="form-vacuna" class="form-evento" style="display:none">
       <div class="form-group"><label>Vacuna aplicada</label><input type="text" id="ev-vacuna" placeholder="Ej: Antirrábica, Séxtuple..."></div>
       <div class="form-row">
@@ -552,11 +309,13 @@
       </div>
       <div class="form-group"><label>Próximo refuerzo</label><input type="date" id="ev-prox-vac"></div>
     </div>
+
     <div id="form-cirugia" class="form-evento" style="display:none">
       <div class="form-group"><label>Procedimiento</label><input type="text" id="ev-cirugia" placeholder="Ej: Castración, limpieza dental..."></div>
       <div class="form-group"><label>Anestesia</label><input type="text" id="ev-anestesia" placeholder="Ej: Ketamina + Xilazina"></div>
       <div class="form-group"><label>Observaciones post-operatorio</label><textarea id="ev-obs-cir" placeholder="Evolución, indicaciones de alta..."></textarea></div>
     </div>
+
     <div id="form-control" class="form-evento" style="display:none">
       <div class="form-row">
         <div class="form-group"><label>Peso (kg)</label><input type="number" id="ev-peso" placeholder="Ej: 12.5" step="0.1"></div>
@@ -567,6 +326,7 @@
       </div>
       <div class="form-group"><label>Observaciones</label><textarea id="ev-obs-control" placeholder="Estado general, comportamiento..."></textarea></div>
     </div>
+
     <div id="form-desparasitacion" class="form-evento" style="display:none">
       <div class="form-group"><label>Producto</label><input type="text" id="ev-producto" placeholder="Ej: Frontline Plus, Milbemax..."></div>
       <div class="form-row">
@@ -575,6 +335,60 @@
       </div>
       <div class="form-group"><label>Próxima aplicación</label><input type="date" id="ev-prox-des"></div>
     </div>
+
+    <div id="form-laboratorio" class="form-evento" style="display:none">
+      <div class="form-group"><label>Tipo de muestra</label>
+        <select id="ev-tipo-muestra">
+          <option value="Sangre">🩸 Sangre</option>
+          <option value="Orina">🟡 Orina</option>
+          <option value="Materia fecal">🟤 Materia fecal</option>
+          <option value="Raspado cutáneo">🔸 Raspado cutáneo</option>
+          <option value="Hisopado">🔵 Hisopado</option>
+          <option value="Otro">📋 Otro</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Descripción / Análisis solicitado</label><input type="text" id="ev-lab-descripcion" placeholder="Ej: Hemograma completo, bioquímica..."></div>
+      <div class="form-group"><label>Resultado</label><textarea id="ev-lab-resultado" placeholder="Valores, interpretación..." style="min-height:70px"></textarea></div>
+      <div class="form-group"><label>Adjunto (foto o PDF del informe)</label></div>
+      <div class="adjunto-input-wrap" onclick="document.getElementById('inputAdjunto').click()">
+        <img class="adjunto-preview-img" id="adjuntoPreviewImg" src="" alt="">
+        <div id="adjuntoPlaceholder">
+          <div style="font-size:28px;margin-bottom:6px">📎</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-secondary)">Foto o PDF del informe</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Galería · Cámara · Archivo</div>
+        </div>
+        <div class="adjunto-status" id="adjuntoStatus"></div>
+      </div>
+    </div>
+
+    <div id="form-estudios" class="form-evento" style="display:none">
+      <div class="form-row">
+        <div class="form-group"><label>Tipo de estudio</label>
+          <select id="ev-tipo-estudio">
+            <option value="Radiografía">🦴 Radiografía</option>
+            <option value="Ecografía">🔊 Ecografía</option>
+            <option value="Tomografía">🧠 Tomografía</option>
+            <option value="Resonancia">🧲 Resonancia</option>
+            <option value="Electrocardiograma">❤️ ECG</option>
+            <option value="Otro">📋 Otro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Región anatómica</label><input type="text" id="ev-region" placeholder="Ej: Tórax, abdomen..."></div>
+      </div>
+      <div class="form-group"><label>Descripción / Hallazgos</label><textarea id="ev-estudio-desc" placeholder="Describí los hallazgos del estudio..."></textarea></div>
+      <div class="form-group"><label>Adjunto (imagen o PDF)</label></div>
+      <div class="adjunto-input-wrap" onclick="document.getElementById('inputAdjunto').click()">
+        <img class="adjunto-preview-img" id="adjuntoPreviewImg" src="" alt="">
+        <div id="adjuntoPlaceholder">
+          <div style="font-size:28px;margin-bottom:6px">📎</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-secondary)">Imagen o PDF del estudio</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Galería · Cámara · Archivo</div>
+        </div>
+        <div class="adjunto-status" id="adjuntoStatus"></div>
+      </div>
+    </div>
+
+    <input type="file" id="inputAdjunto" accept="image/*,.pdf" style="display:none" onchange="handleAdjuntoChange(this)">
 
     <div class="form-group"><label>Fecha del registro</label><input type="date" id="ev-fecha"></div>
     <button class="btn-primary" id="btnGuardarEvento" onclick="guardarEvento()">Guardar registro</button>
@@ -587,8 +401,6 @@
   <div class="modal">
     <div class="modal-handle"></div>
     <h3>🐾 Nuevo paciente</h3>
-
-    <!-- FOTO -->
     <div class="foto-input-wrap" id="fotoWrap" onclick="document.getElementById('inputFoto').click()">
       <img class="foto-preview" id="fotoPreview" src="" alt="preview">
       <div id="fotoPlaceholder">
@@ -599,7 +411,6 @@
       <div class="foto-uploading" id="fotoUploading">⏳ Subiendo foto...</div>
     </div>
     <input type="file" id="inputFoto" accept="image/*" style="display:none" onchange="handleFotoChange(this)">
-
     <div class="form-row">
       <div class="form-group"><label>Nombre</label><input type="text" id="np-nombre" placeholder="Ej: Milo"></div>
       <div class="form-group"><label>Especie</label>
@@ -622,7 +433,6 @@
       <div class="form-group"><label>Fecha de nacimiento</label><input type="date" id="np-nacimiento"></div>
       <div class="form-group"><label>Color / pelaje</label><input type="text" id="np-color" placeholder="Ej: Negro y blanco"></div>
     </div>
-
     <div style="border-top:1.5px solid var(--border);margin:16px 0 14px;padding-top:16px">
       <div class="form-group" style="margin-bottom:6px"><label>👤 Datos del dueño</label></div>
       <div class="form-group"><input type="text" id="np-dueno" placeholder="Nombre del dueño/a"></div>
@@ -631,79 +441,83 @@
         <div class="form-group"><input type="text" id="np-dir" placeholder="Dirección"></div>
       </div>
     </div>
-
     <button class="btn-primary" id="btnGuardarPaciente" onclick="guardarPaciente()">Guardar paciente</button>
     <button class="btn-secondary" onclick="cerrarModal('modalPaciente')">Cancelar</button>
   </div>
 </div>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2faYo06W2m6leLzs36tDdOrHAI9-0MV521m252Y-eqbGDykqtOyt6OmOCc2yDnqPc/exec";
 const CLOUD_NAME      = "dvxr0garp";
 const UPLOAD_PRESET   = "veterinaria_lapachos";
 
-// ── ESTADO ────────────────────────────────────────────────────────────
-let pacientesData   = [];
-let eventosCache    = {};   // { pacienteId: [...eventos] }
-let pacienteActual  = null;
-let tipoEvento      = "consulta";
-let fotoURLPendiente = "";  // URL de Cloudinary lista para guardar
+let pacientesData    = [];
+let eventosCache     = {};
+let pacienteActual   = null;
+let tipoEvento       = "consulta";
+let fotoURLPendiente = "";
+let adjuntoURLPendiente = "";
+let adjuntoTipoPendiente = "";
 
-// ── API HELPERS ───────────────────────────────────────────────────────
+// ── API ───────────────────────────────────────────────────────────────
 async function apiGet(params) {
-  const qs = new URLSearchParams(params).toString();
-  const res = await fetch(`${APPS_SCRIPT_URL}?${qs}`);
+  const res = await fetch(`${APPS_SCRIPT_URL}?${new URLSearchParams(params)}`);
   return res.json();
 }
-
 async function apiPost(body) {
-  const res = await fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(body)
-  });
+  const res = await fetch(APPS_SCRIPT_URL, { method:"POST", body:JSON.stringify(body) });
   return res.json();
 }
 
-// ── CLOUDINARY UPLOAD ─────────────────────────────────────────────────
+// ── CLOUDINARY ────────────────────────────────────────────────────────
+async function subirCloudinary(file, esPDF) {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("upload_preset", UPLOAD_PRESET);
+  fd.append("folder", esPDF ? "veterinaria/documentos" : "veterinaria/estudios");
+  const tipo = esPDF ? "raw" : "image";
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${tipo}/upload`, { method:"POST", body:fd });
+  const data = await res.json();
+  if (data.secure_url) return data.secure_url;
+  throw new Error("Error subiendo archivo");
+}
+
 async function subirFotoCloudinary(file) {
   const fd = new FormData();
   fd.append("file", file);
   fd.append("upload_preset", UPLOAD_PRESET);
   fd.append("folder", "veterinaria/pacientes");
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-    method: "POST",
-    body: fd
-  });
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method:"POST", body:fd });
   const data = await res.json();
   if (data.secure_url) return data.secure_url;
   throw new Error("Error subiendo foto");
 }
 
-// ── MANEJO DE FOTO ────────────────────────────────────────────────────
+// ── MANEJO FOTO PERFIL ────────────────────────────────────────────────
 async function handleFotoChange(input) {
   const file = input.files[0];
   if (!file) return;
-
-  // Preview inmediato
   const reader = new FileReader();
   reader.onload = e => {
-    const prev = document.getElementById('fotoPreview');
-    prev.src = e.target.result;
-    prev.classList.add('visible');
+    document.getElementById('fotoPreview').src = e.target.result;
+    document.getElementById('fotoPreview').classList.add('visible');
     document.getElementById('fotoPlaceholder').style.display = 'none';
   };
   reader.readAsDataURL(file);
-
-  // Subir a Cloudinary en background
   document.getElementById('fotoUploading').classList.add('visible');
   document.getElementById('btnGuardarPaciente').disabled = true;
   try {
     fotoURLPendiente = await subirFotoCloudinary(file);
     document.getElementById('fotoUploading').textContent = '✅ Foto lista';
-  } catch (err) {
+  } catch {
     mostrarToast('❌ Error subiendo foto', true);
     fotoURLPendiente = "";
   } finally {
@@ -712,71 +526,104 @@ async function handleFotoChange(input) {
   }
 }
 
+// ── MANEJO ADJUNTO EVENTO ─────────────────────────────────────────────
+async function handleAdjuntoChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const esPDF = file.type === 'application/pdf';
+  adjuntoTipoPendiente = esPDF ? 'pdf' : 'imagen';
+
+  const statusEl = document.getElementById('adjuntoStatus');
+  const previewEl = document.getElementById('adjuntoPreviewImg');
+  const placeholderEl = document.getElementById('adjuntoPlaceholder');
+
+  if (!esPDF) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      previewEl.src = e.target.result;
+      previewEl.classList.add('visible');
+      placeholderEl.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    placeholderEl.innerHTML = `<div style="font-size:28px;margin-bottom:6px">📄</div><div style="font-size:13px;font-weight:600;color:var(--text-secondary)">${file.name}</div>`;
+  }
+
+  statusEl.textContent = '⏳ Subiendo...';
+  statusEl.className = 'adjunto-status uploading';
+  document.getElementById('btnGuardarEvento').disabled = true;
+
+  try {
+    adjuntoURLPendiente = await subirCloudinary(file, esPDF);
+    statusEl.textContent = '✅ Listo para guardar';
+    statusEl.className = 'adjunto-status ready';
+  } catch {
+    statusEl.textContent = '❌ Error al subir';
+    statusEl.className = 'adjunto-status error';
+    adjuntoURLPendiente = "";
+    adjuntoTipoPendiente = "";
+  } finally {
+    document.getElementById('btnGuardarEvento').disabled = false;
+  }
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────
 async function init() {
-  document.getElementById('lista-pacientes').innerHTML = `
-    <div class="loading-wrap"><div class="spinner"></div><span>Cargando pacientes...</span></div>`;
+  document.getElementById('lista-pacientes').innerHTML =
+    `<div class="loading-wrap"><div class="spinner"></div><span>Cargando pacientes...</span></div>`;
   try {
-    pacientesData = await apiGet({ action: "getPacientes" });
+    pacientesData = await apiGet({ action:"getPacientes" });
     renderLista(pacientesData);
     actualizarStats();
-  } catch (err) {
+  } catch {
     document.getElementById('lista-pacientes').innerHTML =
-      `<div class="empty-state"><span class="emoji">⚠️</span><p>Error al cargar datos. Verificá la conexión.</p></div>`;
+      `<div class="empty-state"><span class="emoji">⚠️</span><p>Error al cargar. Verificá la conexión.</p></div>`;
   }
 }
 
 // ── STATS ─────────────────────────────────────────────────────────────
 function actualizarStats() {
   document.getElementById('statTotal').textContent = pacientesData.length;
-  // Consultas y vacunas próximas se calculan del cache de eventos
-  let totalConsultas = 0, proxVacunas = 0;
-  const limite = new Date(Date.now() + 30 * 24 * 3600 * 1000);
-  Object.values(eventosCache).forEach(evs => {
-    evs.forEach(ev => {
-      if (ev.Tipo === 'consulta') totalConsultas++;
-      if (ev.Tipo === 'vacuna' && ev.ProxRefuerzo && new Date(ev.ProxRefuerzo) <= limite) proxVacunas++;
-    });
-  });
-  document.getElementById('statConsultas').textContent = totalConsultas;
-  document.getElementById('statProximas').textContent = proxVacunas;
+  let consultas = 0, proxVac = 0;
+  const limite = new Date(Date.now() + 30*24*3600*1000);
+  Object.values(eventosCache).forEach(evs => evs.forEach(ev => {
+    if (ev.Tipo === 'consulta') consultas++;
+    if (ev.Tipo === 'vacuna' && ev.ProxRefuerzo && new Date(ev.ProxRefuerzo) <= limite) proxVac++;
+  }));
+  document.getElementById('statConsultas').textContent = consultas;
+  document.getElementById('statProximas').textContent = proxVac;
 }
 
-// ── RENDER LISTA ──────────────────────────────────────────────────────
+// ── LISTA ─────────────────────────────────────────────────────────────
 function calcularEdad(nac) {
   if (!nac) return '–';
   const hoy = new Date(), n = new Date(nac);
-  const años = hoy.getFullYear() - n.getFullYear();
-  if (años === 0) return `${hoy.getMonth() - n.getMonth() + (hoy.getMonth() < n.getMonth() ? 12 : 0)} meses`;
-  return `${años} año${años !== 1 ? 's' : ''}`;
+  const a = hoy.getFullYear() - n.getFullYear();
+  if (a === 0) return `${hoy.getMonth() - n.getMonth() + (hoy.getMonth() < n.getMonth() ? 12:0)} meses`;
+  return `${a} año${a!==1?'s':''}`;
 }
-
-function emojiEspecie(esp) {
-  return (esp.match(/^\S+/) || ['🐾'])[0];
-}
+function emojiEspecie(esp) { return (esp.match(/^\S+/)||['🐾'])[0]; }
 
 function renderLista(lista) {
   const cont = document.getElementById('lista-pacientes');
   const noRes = document.getElementById('no-results');
-  if (!lista.length) { cont.innerHTML = ''; noRes.style.display = 'block'; return; }
+  if (!lista.length) { cont.innerHTML=''; noRes.style.display='block'; return; }
   noRes.style.display = 'none';
-
-  const limite = new Date(Date.now() + 30 * 24 * 3600 * 1000);
-  cont.innerHTML = lista.map((p, i) => {
+  const limite = new Date(Date.now() + 30*24*3600*1000);
+  cont.innerHTML = lista.map((p,i) => {
     const evs = eventosCache[p.ID] || [];
-    const proxVac = evs.find(e => e.Tipo === 'vacuna' && e.ProxRefuerzo && new Date(e.ProxRefuerzo) <= limite);
+    const proxVac = evs.find(e => e.Tipo==='vacuna' && e.ProxRefuerzo && new Date(e.ProxRefuerzo)<=limite);
     const avatar = p.FotoURL
       ? `<div class="patient-avatar"><img src="${p.FotoURL}" loading="lazy"></div>`
       : `<div class="patient-avatar">${emojiEspecie(p.Especie)}</div>`;
-    return `
-    <div class="patient-card" onclick="abrirFicha('${p.ID}')" style="animation-delay:${i * 0.04}s">
+    return `<div class="patient-card" onclick="abrirFicha('${p.ID}')" style="animation-delay:${i*0.04}s">
       ${avatar}
       <div class="patient-info">
         <div class="patient-name">${p.Nombre}</div>
         <div class="patient-sub">👤 ${p.Dueno} · ${calcularEdad(p.Nacimiento)}</div>
         <div class="patient-badges">
           <span class="badge badge-especie">${p.Especie}</span>
-          ${proxVac ? `<span class="badge badge-alerta">⏰ Refuerzo pronto</span>` : ''}
+          ${proxVac?`<span class="badge badge-alerta">⏰ Refuerzo pronto</span>`:''}
         </div>
       </div>
       <div class="patient-arrow">›</div>
@@ -803,20 +650,13 @@ async function abrirFicha(id) {
   document.getElementById('fabEvento').classList.add('visible');
   document.getElementById('headerTitle').textContent = pacienteActual.Nombre;
   document.getElementById('headerSub').textContent = `${pacienteActual.Especie} · ${pacienteActual.Raza}`;
-  window.scrollTo(0, 0);
-
+  window.scrollTo(0,0);
   renderFichaShell();
-
-  // cargar eventos si no están en cache
   if (!eventosCache[id]) {
     document.getElementById('timeline-eventos').innerHTML =
       `<div class="loading-wrap"><div class="spinner"></div><span>Cargando historial...</span></div>`;
-    try {
-      eventosCache[id] = await apiGet({ action: "getEventos", id });
-      actualizarStats();
-    } catch {
-      eventosCache[id] = [];
-    }
+    try { eventosCache[id] = await apiGet({ action:"getEventos", id }); actualizarStats(); }
+    catch { eventosCache[id] = []; }
   }
   renderTimeline('todos');
 }
@@ -837,68 +677,61 @@ function renderFichaShell() {
   const avatar = p.FotoURL
     ? `<div class="ficha-avatar" onclick="document.getElementById('inputFotoFicha').click()"><img src="${p.FotoURL}"><div class="ficha-avatar-hint">cambiar</div></div>`
     : `<div class="ficha-avatar" onclick="document.getElementById('inputFotoFicha').click()">${emojiEspecie(p.Especie)}<div class="ficha-avatar-hint">+ foto</div></div>`;
-
   document.getElementById('ficha-contenido').innerHTML = `
     <div style="height:6px"></div>
-    <input type="file" id="inputFotoFicha" accept="image/*" capture="environment" style="display:none" onchange="actualizarFotoFicha(this)">
+    <input type="file" id="inputFotoFicha" accept="image/*" style="display:none" onchange="actualizarFotoFicha(this)">
     <div class="ficha-hero">
       ${avatar}
       <div class="ficha-datos">
         <h2>${p.Nombre}</h2>
         <div class="especie">${p.Especie} · ${p.Raza}</div>
         <div class="ficha-grid">
-          <div class="ficha-item"><label>Sexo</label><span>${p.Sexo || '–'}</span></div>
+          <div class="ficha-item"><label>Sexo</label><span>${p.Sexo||'–'}</span></div>
           <div class="ficha-item"><label>Edad</label><span>${calcularEdad(p.Nacimiento)}</span></div>
           <div class="ficha-item"><label>Nacimiento</label><span>${formatFecha(p.Nacimiento)}</span></div>
-          <div class="ficha-item"><label>Color</label><span>${p.Color || '–'}</span></div>
+          <div class="ficha-item"><label>Color</label><span>${p.Color||'–'}</span></div>
         </div>
       </div>
     </div>
-
     <div class="dueno-card">
       <div class="icon">👤</div>
       <div class="dueno-info">
-        <h4>${p.Dueno || '–'}</h4>
-        <p>📞 ${p.Tel || '–'} · 📍 ${p.Dir || '–'}</p>
+        <h4>${p.Dueno||'–'}</h4>
+        <p>📞 ${p.Tel||'–'} · 📍 ${p.Dir||'–'}</p>
       </div>
     </div>
-
     <div class="tabs-wrap">
       <div class="tabs">
-        <button class="tab-btn active" onclick="cambiarTab(this,'todos')">Todo</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'consulta')">🩺 Consultas</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'vacuna')">💉 Vacunas</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'cirugia')">🔬 Cirugías</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'control')">⚖️ Controles</button>
-        <button class="tab-btn" onclick="cambiarTab(this,'desparasitacion')">🐛 Desparasitaciones</button>
+        <button class="tab-btn active" onclick="cambiarTab(this,'todos')" data-tipo="todos">Todo</button>
+        <button class="tab-btn" onclick="cambiarTab(this,'clinico')" data-tipo="clinico">🩺 Clínico</button>
+        <button class="tab-btn" onclick="cambiarTab(this,'diagnostico')" data-tipo="diagnostico">🔬 Diagnóstico</button>
       </div>
     </div>
-    <div id="timeline-eventos"></div>
-  `;
+    <div id="timeline-eventos"></div>`;
 }
 
 async function actualizarFotoFicha(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   mostrarToast('⏳ Subiendo foto...');
   try {
     const url = await subirFotoCloudinary(file);
-    await apiPost({ action: "editPaciente", paciente: { ID: pacienteActual.ID, FotoURL: url } });
+    await apiPost({ action:"editPaciente", paciente:{ ID:pacienteActual.ID, FotoURL:url } });
     pacienteActual.FotoURL = url;
-    pacientesData = pacientesData.map(p => p.ID === pacienteActual.ID ? { ...p, FotoURL: url } : p);
+    pacientesData = pacientesData.map(p => p.ID===pacienteActual.ID ? {...p, FotoURL:url} : p);
     renderFichaShell();
-    renderTimeline(document.querySelector('.tab-btn.active')?.getAttribute('data-tipo') || 'todos');
+    const tipoActivo = document.querySelector('.tab-btn.active')?.getAttribute('data-tipo') || 'todos';
+    renderTimeline(tipoActivo);
     mostrarToast('✅ Foto actualizada');
-  } catch {
-    mostrarToast('❌ Error subiendo foto', true);
-  }
+  } catch { mostrarToast('❌ Error subiendo foto', true); }
 }
 
 // ── TABS / TIMELINE ───────────────────────────────────────────────────
+const CLINICO     = ['consulta','control','cirugia'];
+const DIAGNOSTICO = ['vacuna','desparasitacion','laboratorio','estudios'];
+
 function cambiarTab(btn, tipo) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  btn.setAttribute('data-tipo', tipo);
   renderTimeline(tipo);
 }
 
@@ -906,9 +739,9 @@ function renderTimeline(tipo) {
   const cont = document.getElementById('timeline-eventos');
   if (!cont) return;
   let evs = (eventosCache[pacienteActual.ID] || []).slice();
-  if (tipo !== 'todos') evs = evs.filter(e => e.Tipo === tipo);
-  evs.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha));
-
+  if (tipo === 'clinico')     evs = evs.filter(e => CLINICO.includes(e.Tipo));
+  if (tipo === 'diagnostico') evs = evs.filter(e => DIAGNOSTICO.includes(e.Tipo));
+  evs.sort((a,b) => new Date(b.Fecha) - new Date(a.Fecha));
   if (!evs.length) {
     cont.innerHTML = `<div class="empty-state"><span class="emoji">📂</span><p>No hay registros en esta categoría</p></div>`;
     return;
@@ -918,36 +751,45 @@ function renderTimeline(tipo) {
 
 function renderEvento(ev) {
   const cfg = {
-    consulta:       { icon: '🩺', label: 'Consulta' },
-    vacuna:         { icon: '💉', label: 'Vacuna' },
-    cirugia:        { icon: '🔬', label: 'Cirugía / Procedimiento' },
-    control:        { icon: '⚖️', label: 'Control' },
-    desparasitacion:{ icon: '🐛', label: 'Desparasitación' }
+    consulta:        { icon:'🩺', label:'Consulta' },
+    vacuna:          { icon:'💉', label:'Vacuna' },
+    cirugia:         { icon:'🔬', label:'Cirugía / Procedimiento' },
+    control:         { icon:'⚖️', label:'Control' },
+    desparasitacion: { icon:'🐛', label:'Desparasitación' },
+    laboratorio:     { icon:'🧪', label:'Laboratorio' },
+    estudios:        { icon:'🫁', label:'Estudios / Imágenes' }
   };
-  const c = cfg[ev.Tipo] || { icon: '📋', label: ev.Tipo };
-
+  const c = cfg[ev.Tipo] || { icon:'📋', label:ev.Tipo };
   let cuerpo = '';
+
   if (ev.Tipo === 'consulta') {
-    cuerpo = `<div class="evento-titulo">${ev.Motivo || '–'}</div>
-    <div class="evento-detalle"><b>Diagnóstico:</b> ${ev.Diagnostico || '–'}<br><b>Tratamiento:</b> ${ev.Tratamiento || '–'}${ev.Obs ? `<br><i>${ev.Obs}</i>` : ''}</div>`;
+    cuerpo = `<div class="evento-titulo">${ev.Motivo||'–'}</div>
+    <div class="evento-detalle"><b>Diagnóstico:</b> ${ev.Diagnostico||'–'}<br><b>Tratamiento:</b> ${ev.Tratamiento||'–'}${ev.Obs?`<br><i>${ev.Obs}</i>`:''}</div>`;
   } else if (ev.Tipo === 'vacuna') {
-    cuerpo = `<div class="evento-titulo">${ev.Vacuna || '–'}</div>
-    <div class="evento-detalle">Dosis: ${ev.Dosis || '–'} · Lote: ${ev.Lote || '–'}</div>
-    ${ev.ProxRefuerzo ? `<div class="evento-proxima">⏰ Próximo refuerzo: ${formatFecha(ev.ProxRefuerzo)}</div>` : ''}`;
+    cuerpo = `<div class="evento-titulo">${ev.Vacuna||'–'}</div>
+    <div class="evento-detalle">Dosis: ${ev.Dosis||'–'} · Lote: ${ev.Lote||'–'}</div>
+    ${ev.ProxRefuerzo?`<div class="evento-proxima">⏰ Próximo refuerzo: ${formatFecha(ev.ProxRefuerzo)}</div>`:''}`;
   } else if (ev.Tipo === 'cirugia') {
-    cuerpo = `<div class="evento-titulo">${ev.Procedimiento || '–'}</div>
-    <div class="evento-detalle"><b>Anestesia:</b> ${ev.Anestesia || '–'}${ev.Obs ? `<br>${ev.Obs}` : ''}</div>`;
+    cuerpo = `<div class="evento-titulo">${ev.Procedimiento||'–'}</div>
+    <div class="evento-detalle"><b>Anestesia:</b> ${ev.Anestesia||'–'}${ev.Obs?`<br>${ev.Obs}`:''}</div>`;
   } else if (ev.Tipo === 'control') {
     cuerpo = `<div class="evento-titulo">Control de rutina</div>
-    <div class="evento-detalle"><b>Peso:</b> ${ev.Peso ? ev.Peso + ' kg' : '–'} &nbsp;|&nbsp; <b>Temp:</b> ${ev.Temperatura ? ev.Temperatura + '°C' : '–'}<br><b>Condición:</b> ${ev.Condicion || '–'}${ev.Obs ? `<br><i>${ev.Obs}</i>` : ''}</div>`;
+    <div class="evento-detalle"><b>Peso:</b> ${ev.Peso?ev.Peso+' kg':'–'} &nbsp;|&nbsp; <b>Temp:</b> ${ev.Temperatura?ev.Temperatura+'°C':'–'}<br><b>Condición:</b> ${ev.Condicion||'–'}${ev.Obs?`<br><i>${ev.Obs}</i>`:''}</div>`;
   } else if (ev.Tipo === 'desparasitacion') {
-    cuerpo = `<div class="evento-titulo">${ev.Producto || '–'}</div>
-    <div class="evento-detalle">Dosis: ${ev.Dosis || '–'} · Vía: ${ev.Via || '–'}</div>
-    ${ev.ProxAplicacion ? `<div class="evento-proxima">⏰ Próxima aplicación: ${formatFecha(ev.ProxAplicacion)}</div>` : ''}`;
+    cuerpo = `<div class="evento-titulo">${ev.Producto||'–'}</div>
+    <div class="evento-detalle">Dosis: ${ev.Dosis||'–'} · Vía: ${ev.Via||'–'}</div>
+    ${ev.ProxAplicacion?`<div class="evento-proxima">⏰ Próxima aplicación: ${formatFecha(ev.ProxAplicacion)}</div>`:''}`;
+  } else if (ev.Tipo === 'laboratorio') {
+    cuerpo = `<div class="evento-titulo">${ev.TipoMuestra||'–'}</div>
+    <div class="evento-detalle">${ev.Motivo?`<b>Análisis:</b> ${ev.Motivo}<br>`:''}${ev.Resultado?`<b>Resultado:</b> ${ev.Resultado}`:''}</div>
+    ${renderAdjunto(ev)}`;
+  } else if (ev.Tipo === 'estudios') {
+    cuerpo = `<div class="evento-titulo">${ev.TipoEstudio||'–'}${ev.RegionAnatomica?` — ${ev.RegionAnatomica}`:''}</div>
+    <div class="evento-detalle">${ev.Obs||''}</div>
+    ${renderAdjunto(ev)}`;
   }
 
-  return `
-  <div class="evento-card ${ev.Tipo}">
+  return `<div class="evento-card ${ev.Tipo}">
     <div class="evento-header">
       <span class="evento-icon">${c.icon}</span>
       <span class="evento-tipo">${c.label}</span>
@@ -957,8 +799,36 @@ function renderEvento(ev) {
   </div>`;
 }
 
-// ── GUARDAR EVENTO ────────────────────────────────────────────────────
+function renderAdjunto(ev) {
+  if (!ev.AdjuntoURL) return '';
+  if (ev.AdjuntoTipo === 'imagen') {
+    return `<div class="adjunto-wrap">
+      <img class="adjunto-img" src="${ev.AdjuntoURL}" onclick="abrirLightbox('${ev.AdjuntoURL}')" loading="lazy">
+    </div>`;
+  }
+  if (ev.AdjuntoTipo === 'pdf') {
+    return `<div class="adjunto-wrap">
+      <a class="adjunto-pdf-btn" href="${ev.AdjuntoURL}" target="_blank" rel="noopener">
+        📄 Ver PDF del informe
+      </a>
+    </div>`;
+  }
+  return '';
+}
+
+// ── LIGHTBOX ──────────────────────────────────────────────────────────
+function abrirLightbox(url) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightbox').classList.add('open');
+}
+function cerrarLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+// ── MODAL EVENTO ──────────────────────────────────────────────────────
 function abrirModalEvento() {
+  adjuntoURLPendiente = '';
+  adjuntoTipoPendiente = '';
   document.getElementById('ev-fecha').value = new Date().toISOString().split('T')[0];
   selTipo(document.querySelector('.tipo-btn'), 'consulta');
   document.getElementById('modalEvento').classList.add('open');
@@ -968,67 +838,85 @@ function selTipo(btn, tipo) {
   tipoEvento = tipo;
   document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-  document.querySelectorAll('.form-evento').forEach(f => f.style.display = 'none');
-  document.getElementById('form-' + tipo).style.display = '';
+  document.querySelectorAll('.form-evento').forEach(f => f.style.display='none');
+  document.getElementById('form-'+tipo).style.display = '';
+  // reset adjunto
+  adjuntoURLPendiente = '';
+  adjuntoTipoPendiente = '';
+  const prev = document.getElementById('adjuntoPreviewImg');
+  const placeholder = document.getElementById('adjuntoPlaceholder');
+  const status = document.getElementById('adjuntoStatus');
+  if (prev) { prev.src=''; prev.classList.remove('visible'); }
+  if (placeholder) placeholder.style.display = '';
+  if (status) { status.textContent=''; status.className='adjunto-status'; }
+  document.getElementById('inputAdjunto').value = '';
 }
 
 async function guardarEvento() {
   const fecha = document.getElementById('ev-fecha').value;
   if (!fecha) { mostrarToast('⚠️ Ingresá la fecha', true); return; }
-
   const btn = document.getElementById('btnGuardarEvento');
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
+  btn.disabled = true; btn.textContent = 'Guardando...';
 
-  const ev = { PacienteID: pacienteActual.ID, Tipo: tipoEvento, Fecha: fecha };
+  const ev = { PacienteID:pacienteActual.ID, Tipo:tipoEvento, Fecha:fecha };
 
   if (tipoEvento === 'consulta') {
-    ev.Motivo      = document.getElementById('ev-motivo').value;
-    ev.Diagnostico = document.getElementById('ev-diagnostico').value;
-    ev.Tratamiento = document.getElementById('ev-tratamiento').value;
-    ev.Obs         = document.getElementById('ev-obs-consulta').value;
+    ev.Motivo=document.getElementById('ev-motivo').value;
+    ev.Diagnostico=document.getElementById('ev-diagnostico').value;
+    ev.Tratamiento=document.getElementById('ev-tratamiento').value;
+    ev.Obs=document.getElementById('ev-obs-consulta').value;
   } else if (tipoEvento === 'vacuna') {
-    ev.Vacuna      = document.getElementById('ev-vacuna').value;
-    ev.Dosis       = document.getElementById('ev-dosis-vac').value;
-    ev.Lote        = document.getElementById('ev-lote').value;
-    ev.ProxRefuerzo = document.getElementById('ev-prox-vac').value;
+    ev.Vacuna=document.getElementById('ev-vacuna').value;
+    ev.Dosis=document.getElementById('ev-dosis-vac').value;
+    ev.Lote=document.getElementById('ev-lote').value;
+    ev.ProxRefuerzo=document.getElementById('ev-prox-vac').value;
   } else if (tipoEvento === 'cirugia') {
-    ev.Procedimiento = document.getElementById('ev-cirugia').value;
-    ev.Anestesia     = document.getElementById('ev-anestesia').value;
-    ev.Obs           = document.getElementById('ev-obs-cir').value;
+    ev.Procedimiento=document.getElementById('ev-cirugia').value;
+    ev.Anestesia=document.getElementById('ev-anestesia').value;
+    ev.Obs=document.getElementById('ev-obs-cir').value;
   } else if (tipoEvento === 'control') {
-    ev.Peso        = document.getElementById('ev-peso').value;
-    ev.Temperatura = document.getElementById('ev-temperatura').value;
-    ev.Condicion   = document.getElementById('ev-condicion').value;
-    ev.Obs         = document.getElementById('ev-obs-control').value;
+    ev.Peso=document.getElementById('ev-peso').value;
+    ev.Temperatura=document.getElementById('ev-temperatura').value;
+    ev.Condicion=document.getElementById('ev-condicion').value;
+    ev.Obs=document.getElementById('ev-obs-control').value;
   } else if (tipoEvento === 'desparasitacion') {
-    ev.Producto       = document.getElementById('ev-producto').value;
-    ev.Dosis          = document.getElementById('ev-dosis-des').value;
-    ev.Via            = document.getElementById('ev-via').value;
-    ev.ProxAplicacion = document.getElementById('ev-prox-des').value;
+    ev.Producto=document.getElementById('ev-producto').value;
+    ev.Dosis=document.getElementById('ev-dosis-des').value;
+    ev.Via=document.getElementById('ev-via').value;
+    ev.ProxAplicacion=document.getElementById('ev-prox-des').value;
+  } else if (tipoEvento === 'laboratorio') {
+    ev.TipoMuestra=document.getElementById('ev-tipo-muestra').value;
+    ev.Motivo=document.getElementById('ev-lab-descripcion').value;
+    ev.Resultado=document.getElementById('ev-lab-resultado').value;
+    ev.AdjuntoURL=adjuntoURLPendiente;
+    ev.AdjuntoTipo=adjuntoTipoPendiente;
+  } else if (tipoEvento === 'estudios') {
+    ev.TipoEstudio=document.getElementById('ev-tipo-estudio').value;
+    ev.RegionAnatomica=document.getElementById('ev-region').value;
+    ev.Obs=document.getElementById('ev-estudio-desc').value;
+    ev.AdjuntoURL=adjuntoURLPendiente;
+    ev.AdjuntoTipo=adjuntoTipoPendiente;
   }
 
   try {
-    const res = await apiPost({ action: "addEvento", evento: ev });
+    const res = await apiPost({ action:"addEvento", evento:ev });
     if (res.error) throw new Error(res.error);
     ev.ID = res.id;
     if (!eventosCache[pacienteActual.ID]) eventosCache[pacienteActual.ID] = [];
     eventosCache[pacienteActual.ID].push(ev);
     cerrarModal('modalEvento');
     renderTimeline('todos');
-    // reset tab a "todo"
-    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); if (b.textContent.trim() === 'Todo') b.classList.add('active'); });
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      if (b.getAttribute('data-tipo') === 'todos') b.classList.add('active');
+    });
     mostrarToast('✅ Registro guardado');
     actualizarStats();
-  } catch (err) {
-    mostrarToast('❌ Error al guardar', true);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Guardar registro';
-  }
+  } catch { mostrarToast('❌ Error al guardar', true); }
+  finally { btn.disabled=false; btn.textContent='Guardar registro'; }
 }
 
-// ── GUARDAR PACIENTE ──────────────────────────────────────────────────
+// ── MODAL PACIENTE ────────────────────────────────────────────────────
 function abrirModalPaciente() {
   fotoURLPendiente = '';
   document.getElementById('fotoPreview').classList.remove('visible');
@@ -1040,27 +928,22 @@ function abrirModalPaciente() {
 
 async function guardarPaciente() {
   const nombre = document.getElementById('np-nombre').value.trim();
-  if (!nombre) { mostrarToast('⚠️ Ingresá el nombre del paciente', true); return; }
-
+  if (!nombre) { mostrarToast('⚠️ Ingresá el nombre', true); return; }
   const btn = document.getElementById('btnGuardarPaciente');
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
-
+  btn.disabled=true; btn.textContent='Guardando...';
   const paciente = {
-    Nombre:     nombre,
-    Especie:    document.getElementById('np-especie').value,
-    Raza:       document.getElementById('np-raza').value || 'Mestizo',
-    Sexo:       document.getElementById('np-sexo').value,
-    Nacimiento: document.getElementById('np-nacimiento').value,
-    Color:      document.getElementById('np-color').value,
-    FotoURL:    fotoURLPendiente,
-    Dueno:      document.getElementById('np-dueno').value,
-    Tel:        document.getElementById('np-tel').value,
-    Dir:        document.getElementById('np-dir').value,
+    Nombre:nombre, Especie:document.getElementById('np-especie').value,
+    Raza:document.getElementById('np-raza').value||'Mestizo',
+    Sexo:document.getElementById('np-sexo').value,
+    Nacimiento:document.getElementById('np-nacimiento').value,
+    Color:document.getElementById('np-color').value,
+    FotoURL:fotoURLPendiente,
+    Dueno:document.getElementById('np-dueno').value,
+    Tel:document.getElementById('np-tel').value,
+    Dir:document.getElementById('np-dir').value,
   };
-
   try {
-    const res = await apiPost({ action: "addPaciente", paciente });
+    const res = await apiPost({ action:"addPaciente", paciente });
     if (res.error) throw new Error(res.error);
     paciente.ID = res.id;
     pacientesData.push(paciente);
@@ -1069,14 +952,10 @@ async function guardarPaciente() {
     cerrarModal('modalPaciente');
     renderLista(pacientesData);
     mostrarToast('✅ Paciente registrado');
-    ['np-nombre','np-raza','np-color','np-nacimiento','np-dueno','np-tel','np-dir'].forEach(id => document.getElementById(id).value = '');
-    fotoURLPendiente = '';
-  } catch {
-    mostrarToast('❌ Error al guardar', true);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Guardar paciente';
-  }
+    ['np-nombre','np-raza','np-color','np-nacimiento','np-dueno','np-tel','np-dir'].forEach(id => document.getElementById(id).value='');
+    fotoURLPendiente='';
+  } catch { mostrarToast('❌ Error al guardar', true); }
+  finally { btn.disabled=false; btn.textContent='Guardar paciente'; }
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────
@@ -1086,23 +965,22 @@ function formatFecha(f) {
   if (!f) return '–';
   const s = String(f);
   if (!s.includes('-')) return s;
-  const [y, m, d] = s.split('-');
+  const [y,m,d] = s.split('-');
   return `${d}/${m}/${y}`;
 }
 
-function mostrarToast(msg, esError = false) {
+function mostrarToast(msg, esError=false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast' + (esError ? ' error' : '');
+  t.className = 'toast' + (esError?' error':'');
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+  o.addEventListener('click', e => { if (e.target===o) o.classList.remove('open'); });
 });
 
-// ── ARRANQUE ──────────────────────────────────────────────────────────
 init();
 </script>
 </body>
