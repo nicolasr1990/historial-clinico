@@ -350,14 +350,14 @@
       <div class="form-group"><label>Descripción / Análisis solicitado</label><input type="text" id="ev-lab-descripcion" placeholder="Ej: Hemograma completo, bioquímica..."></div>
       <div class="form-group"><label>Resultado</label><textarea id="ev-lab-resultado" placeholder="Valores, interpretación..." style="min-height:70px"></textarea></div>
       <div class="form-group"><label>Adjunto (foto o PDF del informe)</label></div>
-      <div class="adjunto-input-wrap" onclick="document.getElementById('inputAdjunto').click()">
-        <img class="adjunto-preview-img" id="adjuntoPreviewImg" src="" alt="">
-        <div id="adjuntoPlaceholder">
+      <div class="adjunto-input-wrap" onclick="triggerAdjunto()">
+        <img class="adjunto-preview-img" id="adjuntoPreviewImg-lab" src="" alt="">
+        <div id="adjuntoPlaceholder-lab">
           <div style="font-size:28px;margin-bottom:6px">📎</div>
           <div style="font-size:13px;font-weight:600;color:var(--text-secondary)">Foto o PDF del informe</div>
           <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Galería · Cámara · Archivo</div>
         </div>
-        <div class="adjunto-status" id="adjuntoStatus"></div>
+        <div class="adjunto-status" id="adjuntoStatus-lab"></div>
       </div>
     </div>
 
@@ -377,14 +377,14 @@
       </div>
       <div class="form-group"><label>Descripción / Hallazgos</label><textarea id="ev-estudio-desc" placeholder="Describí los hallazgos del estudio..."></textarea></div>
       <div class="form-group"><label>Adjunto (imagen o PDF)</label></div>
-      <div class="adjunto-input-wrap" onclick="document.getElementById('inputAdjunto').click()">
-        <img class="adjunto-preview-img" id="adjuntoPreviewImg" src="" alt="">
-        <div id="adjuntoPlaceholder">
+      <div class="adjunto-input-wrap" onclick="triggerAdjunto()">
+        <img class="adjunto-preview-img" id="adjuntoPreviewImg-est" src="" alt="">
+        <div id="adjuntoPlaceholder-est">
           <div style="font-size:28px;margin-bottom:6px">📎</div>
           <div style="font-size:13px;font-weight:600;color:var(--text-secondary)">Imagen o PDF del estudio</div>
           <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Galería · Cámara · Archivo</div>
         </div>
-        <div class="adjunto-status" id="adjuntoStatus"></div>
+        <div class="adjunto-status" id="adjuntoStatus-est"></div>
       </div>
     </div>
 
@@ -527,15 +527,20 @@ async function handleFotoChange(input) {
 }
 
 // ── MANEJO ADJUNTO EVENTO ─────────────────────────────────────────────
+function triggerAdjunto() {
+  document.getElementById('inputAdjunto').click();
+}
+
 async function handleAdjuntoChange(input) {
   const file = input.files[0];
   if (!file) return;
   const esPDF = file.type === 'application/pdf';
   adjuntoTipoPendiente = esPDF ? 'pdf' : 'imagen';
+  const sufijo = tipoEvento === 'laboratorio' ? '-lab' : '-est';
 
-  const statusEl = document.getElementById('adjuntoStatus');
-  const previewEl = document.getElementById('adjuntoPreviewImg');
-  const placeholderEl = document.getElementById('adjuntoPlaceholder');
+  const statusEl    = document.getElementById('adjuntoStatus'    + sufijo);
+  const previewEl   = document.getElementById('adjuntoPreviewImg' + sufijo);
+  const placeholderEl = document.getElementById('adjuntoPlaceholder' + sufijo);
 
   if (!esPDF) {
     const reader = new FileReader();
@@ -555,10 +560,10 @@ async function handleAdjuntoChange(input) {
 
   try {
     adjuntoURLPendiente = await subirCloudinary(file, esPDF);
-    statusEl.textContent = '✅ Listo para guardar';
+    statusEl.textContent = esPDF ? '✅ PDF listo para guardar' : '✅ Imagen lista para guardar';
     statusEl.className = 'adjunto-status ready';
   } catch {
-    statusEl.textContent = '❌ Error al subir';
+    statusEl.textContent = '❌ Error al subir archivo';
     statusEl.className = 'adjunto-status error';
     adjuntoURLPendiente = "";
     adjuntoTipoPendiente = "";
@@ -808,7 +813,7 @@ function renderAdjunto(ev) {
   }
   if (ev.AdjuntoTipo === 'pdf') {
     return `<div class="adjunto-wrap">
-      <a class="adjunto-pdf-btn" href="${ev.AdjuntoURL}" target="_blank" rel="noopener">
+      <a class="adjunto-pdf-btn" href="https://docs.google.com/viewer?url=${encodeURIComponent(ev.AdjuntoURL)}&embedded=false" target="_blank" rel="noopener">
         📄 Ver PDF del informe
       </a>
     </div>`;
@@ -843,12 +848,14 @@ function selTipo(btn, tipo) {
   // reset adjunto
   adjuntoURLPendiente = '';
   adjuntoTipoPendiente = '';
-  const prev = document.getElementById('adjuntoPreviewImg');
-  const placeholder = document.getElementById('adjuntoPlaceholder');
-  const status = document.getElementById('adjuntoStatus');
-  if (prev) { prev.src=''; prev.classList.remove('visible'); }
-  if (placeholder) placeholder.style.display = '';
-  if (status) { status.textContent=''; status.className='adjunto-status'; }
+  ['-lab','-est'].forEach(s => {
+    const prev = document.getElementById('adjuntoPreviewImg'+s);
+    const ph   = document.getElementById('adjuntoPlaceholder'+s);
+    const st   = document.getElementById('adjuntoStatus'+s);
+    if (prev) { prev.src=''; prev.classList.remove('visible'); }
+    if (ph)   ph.style.display = '';
+    if (st)   { st.textContent=''; st.className='adjunto-status'; }
+  });
   document.getElementById('inputAdjunto').value = '';
 }
 
