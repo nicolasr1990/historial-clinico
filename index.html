@@ -196,11 +196,17 @@
   .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#000;box-shadow:0 4px 16px rgba(16,185,129,0.3);}
   .btn-secondary{background:var(--surface-light);color:var(--text-primary);}
 
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.98);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:10px;}
+  /* LIGHTBOX con zoom */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.98);z-index:1000;display:none;flex-direction:column;}
   .lightbox.open{display:flex;}
-  .lightbox-close{position:absolute;top:20px;right:20px;color:#fff;font-size:28px;cursor:pointer;width:44px;height:44px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;}
-  .lightbox-content{max-width:95%;max-height:85vh;object-fit:contain;border-radius:8px;}
+  .lightbox-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;flex-shrink:0;background:rgba(0,0,0,0.5);}
+  .lightbox-page-info{color:rgba(255,255,255,0.7);font-size:12px;font-weight:600;}
+  .lightbox-close{color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;flex-shrink:0;}
+  .lightbox-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
+  .lightbox-container{display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px;min-height:100%;}
+  .lightbox-img-wrap{position:relative;width:100%;display:flex;justify-content:center;overflow:hidden;touch-action:none;}
+  .lightbox-img-wrap img{max-width:100%;border-radius:8px;display:block;transform-origin:center center;transition:none;user-select:none;-webkit-user-drag:none;}
+  .lightbox-page-label{color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;text-align:center;margin-top:-4px;}
 
   /* TOAST */
   .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#000;padding:12px 24px;border-radius:30px;font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:0.3s;white-space:nowrap;}
@@ -224,11 +230,6 @@
 <!-- LISTA -->
 <div id="screen-lista" class="screen active">
   <div style="height:6px"></div>
-  <div class="stats-bar">
-    <div class="stat-chip"><div class="num" id="statTotal">–</div><div class="lbl">Pacientes</div></div>
-    <div class="stat-chip"><div class="num" id="statConsultas">–</div><div class="lbl">Consultas</div></div>
-    <div class="stat-chip"><div class="num" id="statProximas">–</div><div class="lbl">Próx. vacunas</div></div>
-  </div>
   <div class="search-container">
     <div class="search-wrap">
       <span class="icon">🔍</span>
@@ -430,10 +431,15 @@
   </div>
 </div>
 
-<!-- LIGHTBOX -->
+<!-- LIGHTBOX con zoom y multi-página -->
 <div id="lightbox" class="lightbox">
-  <button class="lightbox-close" onclick="cerrarLightbox()">✕</button>
-  <div id="lightbox-container" style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;" onclick="cerrarLightbox()"></div>
+  <div class="lightbox-topbar">
+    <span id="lightboxPageInfo" class="lightbox-page-info"></span>
+    <button class="lightbox-close" onclick="cerrarLightbox()">✕</button>
+  </div>
+  <div id="lightbox-scroll" class="lightbox-scroll">
+    <div id="lightbox-container" class="lightbox-container"></div>
+  </div>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -583,14 +589,173 @@ function resetAdjunto(s) {
   }
 }
 
-// ── LIGHTBOX ──────────────────────────────────────────────────────────
-function verArchivo(url) {
-  // Convertir .pdf → .jpg para mostrar como imagen (Cloudinary ya lo convirtió)
-  const imgUrl = url.replace(/\.pdf$/i, '.jpg');
-  document.getElementById('lightbox-container').innerHTML = `<img src="${imgUrl}" class="lightbox-content" onclick="event.stopPropagation()">`;
-  document.getElementById('lightbox').classList.add('open');
+// ── LIGHTBOX CON ZOOM Y MULTI-PÁGINA ─────────────────────────────────
+let lbZoom = 1, lbDragX = 0, lbDragY = 0;
+let lbLastTap = 0, lbPinchDist = 0;
+let lbActiveImg = null;
+
+function verArchivo(urlOriginal) {
+  const lb     = document.getElementById('lightbox');
+  const cont   = document.getElementById('lightbox-container');
+  const info   = document.getElementById('lightboxPageInfo');
+  const scroll = document.getElementById('lightbox-scroll');
+  const esPDF  = urlOriginal.toLowerCase().includes('.pdf');
+  const baseUrl = urlOriginal.replace(/\.pdf$/i, '');
+
+  cont.innerHTML = '';
+  info.textContent = '';
+  lbZoom = 1; lbDragX = 0; lbDragY = 0;
+  lb.classList.add('open');
+  scroll.scrollTop = 0;
+
+  if (!esPDF) {
+    // Imagen simple
+    info.textContent = '';
+    crearImgLightbox(cont, urlOriginal, null);
+  } else {
+    // PDF: cargar páginas dinámicamente hasta que falle
+    info.textContent = 'Cargando...';
+    cargarPaginasPDF(cont, info, baseUrl, 1, 0);
+  }
 }
-function cerrarLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+
+function cargarPaginasPDF(cont, info, baseUrl, pagina, cargadas) {
+  // Cloudinary: insertar pg_N en la URL para obtener cada página
+  // URL original: /image/upload/v123/carpeta/archivo.pdf
+  // URL página N: /image/upload/pg_N/v123/carpeta/archivo.jpg
+  const urlPag = baseUrl.replace('/image/upload/', `/image/upload/pg_${pagina}/`) + '.jpg';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'lightbox-img-wrap';
+  const img = document.createElement('img');
+  img.src = urlPag;
+
+  img.onload = () => {
+    const nuevasCargadas = cargadas + 1;
+    if (pagina > 1) {
+      const label = document.createElement('div');
+      label.className = 'lightbox-page-label';
+      label.textContent = `Página ${pagina}`;
+      cont.appendChild(label);
+    }
+    cont.appendChild(wrap);
+    info.textContent = nuevasCargadas === 1 ? '1 página' : `${nuevasCargadas} páginas`;
+    iniciarZoom(wrap, img);
+    // Intentar siguiente página
+    cargarPaginasPDF(cont, info, baseUrl, pagina + 1, nuevasCargadas);
+  };
+
+  img.onerror = () => {
+    if (cargadas === 0) {
+      // Ni siquiera cargó la primera — mostrar sin pg_N
+      const wrapFallback = document.createElement('div');
+      wrapFallback.className = 'lightbox-img-wrap';
+      const imgFallback = document.createElement('img');
+      imgFallback.src = baseUrl + '.jpg';
+      wrapFallback.appendChild(imgFallback);
+      cont.appendChild(wrapFallback);
+      iniciarZoom(wrapFallback, imgFallback);
+      info.textContent = '';
+    }
+    // Si cargadas > 0, ya terminamos — no hay más páginas
+  };
+
+  img.setAttribute('draggable', 'false');
+  wrap.appendChild(img);
+}
+
+function crearImgLightbox(cont, url, label) {
+  if (label) {
+    const lbl = document.createElement('div');
+    lbl.className = 'lightbox-page-label';
+    lbl.textContent = label;
+    cont.appendChild(lbl);
+  }
+  const wrap = document.createElement('div');
+  wrap.className = 'lightbox-img-wrap';
+  const img = document.createElement('img');
+  img.src = url;
+  img.setAttribute('draggable','false');
+  wrap.appendChild(img);
+  cont.appendChild(wrap);
+  iniciarZoom(wrap, img);
+}
+
+function iniciarZoom(wrap, img) {
+  let scale = 1, startDist = 0;
+  let tx = 0, ty = 0;
+  let lastX = 0, lastY = 0, isDragging = false;
+  let startTx = 0, startTy = 0;
+
+  function applyTransform() {
+    img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  }
+
+  function clampTranslate() {
+    if (scale <= 1) { tx = 0; ty = 0; return; }
+    const maxTx = (img.offsetWidth  * (scale - 1)) / 2;
+    const maxTy = (img.offsetHeight * (scale - 1)) / 2;
+    tx = Math.max(-maxTx, Math.min(maxTx, tx));
+    ty = Math.max(-maxTy, Math.min(maxTy, ty));
+  }
+
+  function getDist(t) {
+    const dx = t[0].clientX - t[1].clientX;
+    const dy = t[0].clientY - t[1].clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  wrap.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      startDist = getDist(e.touches);
+    } else if (e.touches.length === 1) {
+      // Detectar doble toque
+      const now = Date.now();
+      if (now - lbLastTap < 280) {
+        e.preventDefault();
+        if (scale > 1) { scale=1; tx=0; ty=0; }
+        else { scale=2.5; }
+        applyTransform();
+      }
+      lbLastTap = now;
+      // Drag
+      isDragging = true;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+      startTx = tx; startTy = ty;
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const newDist = getDist(e.touches);
+      const delta = newDist / startDist;
+      scale = Math.max(1, Math.min(5, scale * delta));
+      startDist = newDist;
+      clampTranslate();
+      applyTransform();
+    } else if (e.touches.length === 1 && isDragging && scale > 1) {
+      e.preventDefault();
+      tx = startTx + (e.touches[0].clientX - lastX);
+      ty = startTy + (e.touches[0].clientY - lastY);
+      clampTranslate();
+      applyTransform();
+    }
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', e => {
+    isDragging = false;
+    if (scale < 1.05) { scale=1; tx=0; ty=0; applyTransform(); }
+  });
+}
+
+function cerrarLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-container').innerHTML = '';
+  lbLastTap = 0;
+}
 
 // ── INIT ──────────────────────────────────────────────────────────────
 async function init() {
@@ -603,10 +768,7 @@ async function init() {
   } catch(e) { mostrarToast("Error de conexión", true); }
 }
 
-function actualizarStats() {
-  document.getElementById('statTotal').textContent = pacientesData.length;
-  // Las stats de consultas y vacunas se calculan cuando hay datos en cache
-}
+function actualizarStats() {}
 
 // ── LISTA ─────────────────────────────────────────────────────────────
 function calcularEdad(nac) {
@@ -711,12 +873,7 @@ async function cargarEventos(id) {
   try {
     const evs = await fetch(`${APPS_SCRIPT_URL}?action=getEventos&id=${id}`).then(r=>r.json());
     renderTimeline(evs);
-    // Actualizar stats con datos reales
-    const consultas = evs.filter(e=>e.Tipo==='consulta').length;
-    const limite = new Date(Date.now()+30*24*3600*1000);
-    const proxVac = evs.filter(e=>e.Tipo==='vacuna' && e.ProxRefuerzo && new Date(e.ProxRefuerzo)<=limite).length;
-    document.getElementById('statConsultas').textContent = consultas;
-    document.getElementById('statProximas').textContent = proxVac;
+
   } catch {
     document.getElementById('timeline-eventos').innerHTML =
       `<div class="empty-state"><span class="emoji">⚠️</span><p>Error al cargar historial</p></div>`;
@@ -798,7 +955,7 @@ function renderTimeline(evs) {
         <div class="evento-detalle-item">
           <label>${esPDF ? 'Documento (primera página)' : 'Imagen adjunta'}</label>
           <img src="${imgUrl}" class="adjunto-img-preview" onclick="event.stopPropagation();verArchivo('${ev.AdjuntoURL}')" onerror="this.style.display='none'">
-          ${esPDF ? `<a class="adjunto-pdf-btn" href="${ev.AdjuntoURL}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 Ver PDF completo</a>` : ''}
+          ${esPDF ? `<a class="adjunto-pdf-btn" href="${ev.AdjuntoURL.replace(/\.pdf$/i,'.jpg')}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 Ver todas las páginas</a>` : ''}
         </div>`;
     }
 
@@ -871,8 +1028,8 @@ async function guardarEvento() {
 
   try {
     await fetch(APPS_SCRIPT_URL, {method:"POST", body:JSON.stringify({action:"addEvento",evento:ev})});
-    cerrarModal('modalEvento');
-    // ✅ Quedarse en la ficha, solo recargar el timeline
+    // Cerrar modal sin disparar popstate (que llevaría al inicio)
+    document.getElementById('modalEvento').classList.remove('open');
     cargarEventos(pacienteActual.ID);
     mostrarToast('✅ Registro guardado');
   } catch {
