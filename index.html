@@ -121,6 +121,8 @@
   .evento-card.estudios .evento-tipo-label{color:#f472b6;}
 
   .evento-titulo-main{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+  .evento-edit-btn{margin-top:10px;background:var(--surface-light);border:1px solid var(--border-strong);color:var(--text-secondary);font-family:inherit;font-size:12px;font-weight:700;padding:9px 14px;border-radius:var(--radius-xs);cursor:pointer;display:flex;align-items:center;gap:6px;justify-content:center;width:100%;}
+  .evento-edit-btn:active{transform:scale(0.97);}
   .evento-fecha-badge{font-size:11px;color:var(--text-muted);font-weight:600;background:rgba(255,255,255,0.04);padding:3px 9px;border-radius:20px;border:1px solid var(--border);flex-shrink:0;}
   .evento-chevron{font-size:14px;color:var(--text-muted);flex-shrink:0;transition:transform 0.25s;margin-left:4px;}
   .evento-card.open .evento-chevron{transform:rotate(180deg);}
@@ -249,7 +251,7 @@
 <div id="modalEvento" class="modal-overlay">
   <div class="modal">
     <div class="modal-handle"></div>
-    <h3>📋 Nuevo Registro</h3>
+    <h3 id="modalEventoTitulo">📋 Nuevo Registro</h3>
 
     <div class="form-group"><label>Fecha</label><input type="date" id="ev-fecha" class="form-control"></div>
 
@@ -452,6 +454,8 @@ const UPLOAD_PRESET = "veterinaria_lapachos";
 let pacientesData = [], pacienteActual = null, tipoEvento = "consulta";
 let fotoURLPendiente = "";
 let adjunto = { lab:{url:"",tipo:""}, est:{url:"",tipo:""} };
+let eventosActuales = [];
+let eventoEnEdicion = null; // ID del evento si el modal está en modo edición, null si es Nuevo Registro
 
 // ── NAVEGACIÓN ────────────────────────────────────────────────────────
 window.addEventListener('popstate', () => {
@@ -489,6 +493,7 @@ function volverListaInternal() {
 
 function abrirModal(id) {
   if (id === 'modalEvento') {
+    resetModalEventoUI();
     document.getElementById('ev-fecha').value = new Date().toISOString().split('T')[0];
     limpiarCamposEvento();
     selTipo(document.querySelector('.tipo-btn'), 'consulta');
@@ -499,7 +504,87 @@ function abrirModal(id) {
 
 function cerrarModal(id) {
   document.getElementById(id).classList.remove('open');
+  if (id === 'modalEvento') resetModalEventoUI();
   if (history.state && history.state.modal === id) history.back();
+}
+
+// Vuelve el modal de evento a su estado "Nuevo Registro" (título, botón, selector de tipo visible)
+function resetModalEventoUI() {
+  eventoEnEdicion = null;
+  document.getElementById('modalEventoTitulo').textContent = '📋 Nuevo Registro';
+  document.getElementById('btnGuardarEvento').textContent = 'Guardar';
+  document.querySelector('.tipo-selector').style.display = '';
+}
+
+// Muestra un adjunto ya existente (al editar) en el uploader, sin necesidad de volver a subirlo
+function mostrarAdjuntoExistente(sufijo, url, tipo) {
+  adjunto[sufijo] = { url, tipo: tipo || '' };
+  const prev = document.getElementById(`adjuntoPreview-${sufijo}`);
+  const ph   = document.getElementById(`adjuntoPlaceholder-${sufijo}`);
+  const st   = document.getElementById(`adjuntoStatus-${sufijo}`);
+  if (prev) { prev.src = url.replace(/\.pdf$/i, '.jpg'); prev.classList.add('visible'); }
+  if (ph) ph.style.display = 'none';
+  if (st) { st.textContent = '📎 Archivo actual (tocá para reemplazarlo)'; st.style.color = 'var(--text-secondary)'; }
+}
+
+// Abre el modal de evento en modo edición, precargado con los datos del evento
+function editarEvento(id) {
+  const ev = eventosActuales.find(e => String(e.ID) === String(id));
+  if (!ev) { mostrarToast('❌ No se encontró el registro', true); return; }
+
+  eventoEnEdicion = ev.ID;
+  tipoEvento = ev.Tipo;
+
+  limpiarCamposEvento();
+  document.getElementById('modalEventoTitulo').textContent = '✏️ Editar Registro';
+  document.getElementById('btnGuardarEvento').textContent = 'Guardar cambios';
+  document.querySelector('.tipo-selector').style.display = 'none'; // no se puede cambiar el tipo al editar
+
+  document.querySelectorAll('.form-evento').forEach(f => f.style.display = 'none');
+  const target = document.getElementById(`form-${ev.Tipo}`);
+  if (target) target.style.display = 'block';
+
+  document.getElementById('ev-fecha').value = ev.Fecha || '';
+
+  if (ev.Tipo === 'consulta') {
+    document.getElementById('ev-motivo').value = ev.Motivo || '';
+    document.getElementById('ev-diagnostico').value = ev.Diagnostico || '';
+    document.getElementById('ev-tratamiento').value = ev.Tratamiento || '';
+    document.getElementById('ev-obs-consulta').value = ev.Obs || '';
+  } else if (ev.Tipo === 'vacuna') {
+    document.getElementById('ev-vacuna').value = ev.Vacuna || '';
+    document.getElementById('ev-dosis-vac').value = ev.Dosis || '';
+    document.getElementById('ev-lote').value = ev.Lote || '';
+    document.getElementById('ev-prox-vac').value = ev.ProxRefuerzo || '';
+    document.getElementById('ev-obs-vacuna').value = ev.Obs || '';
+  } else if (ev.Tipo === 'control') {
+    document.getElementById('ev-peso').value = ev.Peso || '';
+    document.getElementById('ev-temperatura').value = ev.Temperatura || '';
+    if (ev.Condicion) document.getElementById('ev-condicion').value = ev.Condicion;
+    document.getElementById('ev-obs-control').value = ev.Obs || '';
+  } else if (ev.Tipo === 'desparasitacion') {
+    document.getElementById('ev-producto').value = ev.Producto || '';
+    document.getElementById('ev-dosis-des').value = ev.Dosis || '';
+    if (ev.Via) document.getElementById('ev-via').value = ev.Via;
+    document.getElementById('ev-prox-des').value = ev.ProxAplicacion || '';
+  } else if (ev.Tipo === 'laboratorio') {
+    if (ev.TipoMuestra) document.getElementById('ev-tipo-muestra').value = ev.TipoMuestra;
+    document.getElementById('ev-lab-descripcion').value = ev.Motivo || '';
+    document.getElementById('ev-lab-resultado').value = ev.Resultado || '';
+    if (ev.AdjuntoURL) mostrarAdjuntoExistente('lab', ev.AdjuntoURL, ev.AdjuntoTipo);
+  } else if (ev.Tipo === 'estudios') {
+    if (ev.TipoEstudio) document.getElementById('ev-tipo-estudio').value = ev.TipoEstudio;
+    document.getElementById('ev-region').value = ev.RegionAnatomica || '';
+    document.getElementById('ev-estudio-desc').value = ev.Obs || '';
+    if (ev.AdjuntoURL) mostrarAdjuntoExistente('est', ev.AdjuntoURL, ev.AdjuntoTipo);
+  } else if (ev.Tipo === 'cirugia') {
+    document.getElementById('ev-cirugia').value = ev.Procedimiento || '';
+    document.getElementById('ev-anestesia').value = ev.Anestesia || '';
+    document.getElementById('ev-obs-cir').value = ev.Obs || '';
+  }
+
+  document.getElementById('modalEvento').classList.add('open');
+  history.pushState({modal:'modalEvento'}, '');
 }
 
 function cerrarTodosModales() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open')); }
@@ -872,6 +957,7 @@ async function actualizarFotoFicha(input) {
 async function cargarEventos(id) {
   try {
     const evs = await fetch(`${APPS_SCRIPT_URL}?action=getEventos&id=${id}`).then(r=>r.json());
+    eventosActuales = evs || [];
     renderTimeline(evs);
 
   } catch {
@@ -972,6 +1058,7 @@ function renderTimeline(evs) {
       <div class="evento-body">
         ${cuerpo}
         ${adjuntoHtml}
+        <button class="evento-edit-btn" onclick="event.stopPropagation();editarEvento('${ev.ID}')">✏️ Editar registro</button>
       </div>
     </div>`;
   }).join('')}</div>`;
@@ -986,6 +1073,7 @@ async function guardarEvento() {
   btn.disabled = true; btn.textContent = 'Guardando...';
 
   const ev = { PacienteID:pacienteActual.ID, Tipo:tipoEvento, Fecha:fecha };
+  if (eventoEnEdicion) ev.ID = eventoEnEdicion;
 
   if (tipoEvento==='consulta') {
     ev.Motivo=document.getElementById('ev-motivo').value;
@@ -1026,16 +1114,18 @@ async function guardarEvento() {
     ev.Obs=document.getElementById('ev-obs-cir').value;
   }
 
+  const esEdicion = !!eventoEnEdicion;
   try {
-    await fetch(APPS_SCRIPT_URL, {method:"POST", body:JSON.stringify({action:"addEvento",evento:ev})});
+    await fetch(APPS_SCRIPT_URL, {method:"POST", body:JSON.stringify({action: esEdicion ? "editEvento" : "addEvento", evento:ev})});
     // Cerrar modal sin disparar popstate (que llevaría al inicio)
     document.getElementById('modalEvento').classList.remove('open');
+    resetModalEventoUI();
     cargarEventos(pacienteActual.ID);
-    mostrarToast('✅ Registro guardado');
+    mostrarToast(esEdicion ? '✅ Registro actualizado' : '✅ Registro guardado');
   } catch {
     mostrarToast('❌ Error al guardar', true);
   } finally {
-    btn.disabled=false; btn.textContent='Guardar';
+    btn.disabled=false; btn.textContent = esEdicion ? 'Guardar cambios' : 'Guardar';
   }
 }
 
